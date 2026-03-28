@@ -1,3 +1,19 @@
+---
+gsd_state_version: 1.0
+milestone: v1.0
+milestone_name: milestone
+status: planning
+stopped_at: Phase 1 context gathered (default decisions)
+last_updated: "2026-03-28T19:07:09.541Z"
+last_activity: 2026-03-29 — v1 改为 TCP+TLS 字节流、不采用 WebSocket；规划文档已同步
+progress:
+  total_phases: 6
+  completed_phases: 0
+  total_plans: 3
+  completed_plans: 0
+  percent: 0
+---
+
 # Project State
 
 ## Project Reference
@@ -55,6 +71,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-29  
-Stopped at: 初始化完成；待 `/gsd-discuss-phase 1` 或 `/gsd-plan-phase 1`  
-Resume file: None  
+Last session: 2026-03-28T19:07:09.536Z
+Stopped at: Phase 1 context gathered (default decisions)
+Resume file: .planning/phases/01-tls/01-CONTEXT.md
