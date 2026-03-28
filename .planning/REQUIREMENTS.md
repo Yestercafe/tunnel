@@ -1,7 +1,7 @@
 # Requirements: Tunnel（传输隧道）
 
 **Defined:** 2026-03-29  
-**Core Value:** 在 TLS 由边缘/服务器终止的前提下，用同一套协议支撑广播、私信、双向流与可选应用信封，并可在浏览器通过 WebSocket 接入。
+**Core Value:** 在 TLS 由边缘/服务器终止的前提下，用同一套协议支撑广播、私信、双向流与可选应用信封；v1 以 **TLS 字节流（典型 TCP）** 为承载，不依赖 WebSocket。
 
 ## v1 Requirements
 
@@ -10,7 +10,7 @@
 - [ ] **FRAME-01**: 规范定义**二进制帧格式**（字段顺序、字节序、最大/最小长度规则）
 - [ ] **FRAME-02**: 帧头包含**协议版本**字段，并说明**兼容策略**（拒绝/忽略未知版本）
 - [ ] **FRAME-03**: 帧头包含 **capability**（或等价能力位），并说明**未知能力位的处理规则**
-- [ ] **TRANS-01**: 规范定义 **WebSocket（WSS 二进制）** 上映射：WS message 与逻辑帧的对应关系（含分片/重组若需要）
+- [ ] **TRANS-01**: 规范定义在 **TLS 之上的字节流**（典型为 **TCP 连接经 TLS**）上如何**从连续字节切出逻辑帧**（粘包/半包、最大帧长、是否长度前缀等）；**不**将 WebSocket 作为 v1 必选承载
 
 ### 会话与成员
 
@@ -33,7 +33,7 @@
 ### 状态机、错误与文档化假设
 
 - [ ] **STATE-01**: 文档化连接级与 session 级 **状态机**（状态、事件、转移）
-- [ ] **ERR-01**: 定义 **错误码目录** 与 **关闭/断开原因**（若适用 WebSocket close code 映射则一并说明）
+- [ ] **ERR-01**: 定义 **错误码目录** 与 **连接/会话中止原因**（与 TLS alert、TCP 断开的文档关系可简述）
 - [ ] **SEC-01**: 文档化安全假设：**TLS 在边缘/服务器终止**；协议内**不负责 E2E 加密**（v1）
 
 ### 一致性测试
@@ -44,7 +44,8 @@
 
 ### 传输
 
-- **TRANS-02**: 原生 TCP（或 QUIC）承载与帧映射（与 WS 共享逻辑帧）
+- **TRANS-02**: 可选 **WebSocket（WSS）适配层**：将逻辑帧映射到 WS binary message（供浏览器等场景）；**逻辑帧**与 v1 相同  
+- **TRANS-03**: 可选 **QUIC / WebTransport** 等与 **TRANS-01** 并列的承载说明（若需要）
 
 ### 安全
 
@@ -57,6 +58,7 @@
 | v1 完整生产级 Relay 运维（监控、配额、多区域） | 先协议与一致性测试 |
 | 大规模水平扩展与集群分片 | 当前假设少量固定 peer |
 | 完整身份联邦（SSO/OAuth） | v1 以 token/邀请码为主 |
+| 浏览器内原生 client（无 WS/WebTransport 适配） | v1 主路径为 TCP+TLS；见 v2 **TRANS-02** |
 
 ## Traceability
 
@@ -89,4 +91,4 @@
 ---
 
 *Requirements defined: 2026-03-29*  
-*Last updated: 2026-03-29 after roadmap creation*
+*Last updated: 2026-03-29 after dropping WebSocket as v1 transport*

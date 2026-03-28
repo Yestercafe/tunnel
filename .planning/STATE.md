@@ -4,15 +4,15 @@
 
 See: .planning/PROJECT.md (updated 2026-03-29)
 
-**Core value:** 在 TLS 由边缘/服务器终止的前提下，用同一套协议同时支撑广播、私信、双向流、大小载荷与可选应用信封，并让 Web 与 Copilot 等上层复用。  
-**Current focus:** Phase 1 — 协议基础（帧与 WebSocket 承载）
+**Core value:** 在 TLS 由边缘/服务器终止的前提下，用同一套协议同时支撑广播、私信、双向流、大小载荷与可选应用信封；上层（含 Web、Copilot 管道等）通过**应用信封**复用。  
+**Current focus:** Phase 1 — 协议基础（帧与 TLS 字节流承载）
 
 ## Current Position
 
-Phase: 1 of 6（协议基础 — 帧与 WebSocket 承载）  
+Phase: 1 of 6（协议基础 — 帧与 TLS 字节流承载）  
 Plan: 0 of 3 in current phase  
 Status: Ready to plan  
-Last activity: 2026-03-29 — 项目初始化、路线图与需求已创建  
+Last activity: 2026-03-29 — v1 改为 TCP+TLS 字节流、不采用 WebSocket；规划文档已同步  
 
 Progress: [░░░░░░░░░░] 0%
 
@@ -43,7 +43,7 @@ Progress: [░░░░░░░░░░] 0%
 
 Decisions are logged in PROJECT.md Key Decisions table. Recent decisions affecting current work:
 
-- Initialization: 协议先行；Go；WebSocket + 浏览器；流内有序、流间乱序；广播 + 私信；帧头版本与 capability  
+- Initialization: 协议先行；Go；**v1 承载 TCP+TLS**（不用 WebSocket）；流内有序、流间乱序；广播 + 私信；帧头版本与 capability  
 
 ### Pending Todos
 

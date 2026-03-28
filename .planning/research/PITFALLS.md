@@ -1,13 +1,13 @@
 # Pitfalls Research
 
-**Domain:** WebSocket 中继、二进制协议、浏览器 client  
+**Domain:** TLS 字节流中继、二进制协议  
 **Researched:** 2026-03-29  
 **Confidence:** MEDIUM
 
-## Pitfall: WebSocket 消息边界与自定义帧不对齐
+## Pitfall: 字节流粘包/半包与逻辑帧边界不一致
 
-**Warning signs:** 解析随机失败、仅在某些浏览器复现、大包截断。  
-**Prevention:** 在规范中明确：**一个 WS binary message 与一个逻辑帧的关系**（1:1 或分片重组规则）；为大块流定义 **重组状态机**。  
+**Warning signs:** 解析随机失败、升级 TLS 后偶发截断、大包永远无法读完。  
+**Prevention:** 在规范中明确：**长度前缀或定界规则**、**最大帧长**、**半包缓冲策略**；为大块载荷定义 **分片与重组状态机**（若在帧层拆分）。  
 **Suggested phase:** 帧格式与传输绑定阶段（Phase 1）。
 
 ## Pitfall: 广播与私信语义混用导致重复投递或遗漏
