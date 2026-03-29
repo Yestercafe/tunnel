@@ -39,8 +39,8 @@ created: 2026-03-29
 | Task ID | Plan | Wave | Requirement | Test Type | Automated Command | File Exists | Status |
 |---------|------|------|-------------|-----------|-------------------|-------------|--------|
 | 05-01-* | 01 | 1 | STATE-01 | docs + optional rg | `rg 'STATE-01|connection-state|session-state' docs/spec/v1/` | ⬜ pending |
-| 05-02-* | 02 | 1 | ERR-01 | unit + rg | `go test ./pkg/...` ; `rg 'ERR_' docs/spec/v1/errors.md` | ⬜ pending |
-| 05-03-* | 03 | 1 | SEC-01 | rg | `rg 'SEC-01|security-assumptions' docs/spec/v1/` | ⬜ pending |
+| 05-02-* | 02 | 2 | ERR-01 | unit + rg | `go test ./pkg/...` ; `rg 'ERR_' docs/spec/v1/errors.md` | ⬜ pending |
+| 05-03-* | 03 | 3 | SEC-01 | rg | `rg 'SEC-01|security-assumptions' docs/spec/v1/` | ⬜ pending |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 
