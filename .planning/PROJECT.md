@@ -21,10 +21,10 @@
 - ✓ **连接级成帧与 session 成员状态** — `connection-state.md`、`session-state.md`（STATE-01，Phase 5）
 - ✓ **错误码目录与 `PROTOCOL_ERROR`（`0x05`）** — `errors.md`、`pkg/framing` ErrCode（ERR-01，Phase 5）
 - ✓ **TLS 边缘终止与安全假设（v1 无 E2E）** — `security-assumptions.md`（SEC-01，Phase 5）
+- ✓ **一致性测试（TEST-01）**：`go test ./...`、CI、`testdata/` golden/负例 — Phase 6
 
 ### Active
 
-- [ ] 一致性测试：可机器执行的用例/向量，覆盖规范中的关键行为（路线图 Phase 6）
 - [x] 会话语义：创建者创建 session；成员凭 `session_id`/邀请码加入；**同 session 内默认广播**（除发送者外均收到）；支持**私信/单播**至指定 peer — Phase 2–3 已规范会话成员与路由投递
 - [x] 传输语义：**双向流**；**按流（或逻辑通道）内有序**，**流之间允许乱序** — Phase 3 已写入 `streams-lifecycle.md`
 - [x] 分层：帧之上**可选应用信封**（如 content-type、请求 id、关联 id）— Phase 4 已写入 `app-envelope.md` 与 `streams-lifecycle.md`
@@ -85,4 +85,4 @@
 
 ---
 
-*Last updated: 2026-03-29 after Phase 5 execution*
+*Last updated: 2026-03-29 — Phase 6（一致性测试套件）已完成*

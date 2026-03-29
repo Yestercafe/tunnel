@@ -17,7 +17,7 @@
 |--------|------|
 | `.hex` | **十六进制文本**：允许空格与换行；测试侧用 `strings.Fields` 拼接后 `hex.DecodeString` 得到原始字节 |
 | `.bin` | **原始二进制**（与 `.hex` 二选一，按场景选用） |
-| `.hextxt` | **行分隔的文本驱动用例**（仅 `appenvelope` 分割测试使用）：与 `.hex`（纯十六进制字节块）区分，格式见该目录内文件头注释 |
+| `.hextxt` | **行分隔的文本驱动用例**（仅 `appenvelope` 分割测试使用）：与 `.hex`（纯十六进制字节块）区分；列为 TAB 分隔，文件头注释说明列含义（见 `testdata/appenvelope/split_cases.hextxt`） |
 
 ## 命名建议
 

@@ -1,0 +1,2 @@
+# payload_len = MaxPayloadLen+1，仅帧头 10 字节（errors.md ERR_FRAME_TOO_LARGE / frame-layout.md）
+01000001000000000000

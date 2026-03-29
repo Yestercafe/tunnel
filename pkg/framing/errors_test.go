@@ -3,6 +3,7 @@ package framing
 import "testing"
 
 // Golden values must match docs/spec/v1/errors.md (ERR-01).
+// Phase 6：与 errors.md 对照无新增码。
 func TestErrCode_matchesSpecTable(t *testing.T) {
 	cases := []struct {
 		name string

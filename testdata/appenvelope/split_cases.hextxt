@@ -1,0 +1,8 @@
+# docs/spec/v1/app-envelope.md — SplitApplicationData 行格式用例（APP-01）
+# 列（TAB 分隔）：flags_hex app_hex want_kind want_env_hex want_body_hex
+# want_kind：ok | ErrEnvelopeTooShort | ErrEnvelopeTruncated
+# want_env_hex / want_body_hex：无则 -
+
+00	010203	ok	-	010203
+02	0002abcd0909	ok	abcd	0909
+02	00050102	ErrEnvelopeTruncated	-	-
