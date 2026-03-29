@@ -16,13 +16,14 @@
 
 - ✓ **v1 帧布局、版本/capability、TLS 字节流成帧** — 见 `docs/spec/v1/`；参考实现 `pkg/framing`（Phase 1）
 - ✓ **会话创建/加入、peer_id、可选 join token** — `session-create-join.md`、`peer-identity.md`、`join-credentials.md`（Phase 2）
+- ✓ **路由（广播/单播）与流生命周期、流内/流间顺序** — `routing-modes.md`、`streams-lifecycle.md`（Phase 3）
 
 ### Active
 
 - [ ] 协议规范：**会话/连接状态机**、**完整错误码目录**（路线图 Phase 2–5）
 - [ ] 一致性测试：可机器执行的用例/向量，覆盖规范中的关键行为
-- [x] 会话语义：创建者创建 session；成员凭 `session_id`/邀请码加入；**同 session 内默认广播**（除发送者外均收到）；支持**私信/单播**至指定 peer — Phase 2 已规范会话与成员；路由语义待 Phase 3
-- [ ] 传输语义：**双向流**；**按流（或逻辑通道）内有序**，**流之间允许乱序**
+- [x] 会话语义：创建者创建 session；成员凭 `session_id`/邀请码加入；**同 session 内默认广播**（除发送者外均收到）；支持**私信/单播**至指定 peer — Phase 2–3 已规范会话成员与路由投递
+- [x] 传输语义：**双向流**；**按流（或逻辑通道）内有序**，**流之间允许乱序** — Phase 3 已写入 `streams-lifecycle.md`
 - [ ] 分层：帧之上**可选应用信封**（如 content-type、请求 id、关联 id）
 - [ ] 成员与连接：协议内会话与成员逻辑；可配合**短 token**；不将端到端加密作为 v1 必选项
 - [x] **传输承载**：v1 规范以 **TLS 之上的字节流（典型为 TCP + TLS）** 为参考路径；**成帧、粘包与流边界**在规范中写清（不依赖 WebSocket）— Phase 1 已文档化
@@ -81,4 +82,4 @@
 
 ---
 
-*Last updated: 2026-03-29 after Phase 2 execution*
+*Last updated: 2026-03-29 after Phase 3 execution*

@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-stopped_at: Phase 2 complete；下一步 Phase 3
-last_updated: "2026-03-29T07:41:49.487Z"
-last_activity: 2026-03-29 -- Phase 03 execution started
+status: planning
+stopped_at: Phase 3 complete — ready for Phase 4
+last_updated: "2026-03-29T08:00:00.000Z"
+last_activity: 2026-03-29
 progress:
   total_phases: 6
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 9
-  completed_plans: 6
-  percent: 33
+  completed_plans: 9
+  percent: 50
 ---
 
 # Project State
@@ -21,22 +21,22 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-29)
 
 **Core value:** 在 TLS 由边缘/服务器终止的前提下，用同一套协议同时支撑广播、私信、双向流、大小载荷与可选应用信封；上层（含 Web、Copilot 管道等）通过**应用信封**复用。  
-**Current focus:** Phase 03 — routing-streams
+**Current focus:** Phase 4 — 可选应用信封
 
 ## Current Position
 
-Phase: 03 (routing-streams) — EXECUTING
-Plan: 1 of 3
-Status: Executing Phase 03
-Last activity: 2026-03-29 -- Phase 03 execution started
+Phase: 4 of 6（可选应用信封）  
+Plan: Not started in current phase  
+Status: Phase 3 complete — ready to plan / execute Phase 4  
+Last activity: 2026-03-29 — 路由与流规范已发布  
 
-Progress: [███░░░░░░░] 33%
+Progress: [█████░░░░░] 50%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 6  
+- Total plans completed: 9  
 - Average duration: —  
 - Total execution time: —  
 
@@ -46,6 +46,7 @@ Progress: [███░░░░░░░] 33%
 |-------|-------|-------|----------|
 | 1 tls | 3 | 3 | — |
 | 2 session | 3 | 3 | — |
+| 3 routing-streams | 3 | 3 | — |
 
 **Recent Trend:**
 
@@ -73,5 +74,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-03-29
-Stopped at: Phase 2 complete；下一步 Phase 3  
-Resume file: .planning/phases/03-*-CONTEXT.md（待创建）
+Stopped at: Phase 3 complete；下一步 Phase 4（应用信封）  
+Resume file: `.planning/phases/04-*`（待创建）

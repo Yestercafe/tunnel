@@ -21,10 +21,10 @@
 
 ### 路由与流语义
 
-- [ ] **ROUTE-01**: 支持 **广播**：同一 session 内，**除发送者外**所有成员可收到
-- [ ] **ROUTE-02**: 支持 **私信（单播）**：可指定目标 peer，仅目标接收
-- [ ] **STREAM-01**: 支持 **双向流**（在单 peer–relay 连接上可持续收发）
-- [ ] **STREAM-02**: 明确 **流 ID（或逻辑通道）** 语义：**单流内有序**；**不同流之间允许乱序**
+- [x] **ROUTE-01**: 支持 **广播**：同一 session 内，**除发送者外**所有成员可收到
+- [x] **ROUTE-02**: 支持 **私信（单播）**：可指定目标 peer，仅目标接收
+- [x] **STREAM-01**: 支持 **双向流**（在单 peer–relay 连接上可持续收发）
+- [x] **STREAM-02**: 明确 **流 ID（或逻辑通道）** 语义：**单流内有序**；**不同流之间允许乱序**
 
 ### 应用信封
 
@@ -72,10 +72,10 @@
 | SESS-02 | Phase 2 | Complete |
 | SESS-03 | Phase 2 | Complete |
 | SESS-04 | Phase 2 | Complete |
-| ROUTE-01 | Phase 3 | Pending |
-| ROUTE-02 | Phase 3 | Pending |
-| STREAM-01 | Phase 3 | Pending |
-| STREAM-02 | Phase 3 | Pending |
+| ROUTE-01 | Phase 3 | Complete |
+| ROUTE-02 | Phase 3 | Complete |
+| STREAM-01 | Phase 3 | Complete |
+| STREAM-02 | Phase 3 | Complete |
 | APP-01 | Phase 4 | Pending |
 | STATE-01 | Phase 5 | Pending |
 | ERR-01 | Phase 5 | Pending |
@@ -91,4 +91,4 @@
 ---
 
 *Requirements defined: 2026-03-29*  
-*Last updated: 2026-03-29 after Phase 2 complete*
+*Last updated: 2026-03-29 after Phase 3 complete*
