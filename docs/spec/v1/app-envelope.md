@@ -87,4 +87,54 @@
 
 ---
 
+## 端到端示例 B：Copilot 往返
+
+**场景：** **Peer A** 与 **Peer B** 在 **同一条** 双向逻辑流上交换 **`STREAM_DATA`**（**同一** **`stream_id = 7`**，大端 **`0x00000007`**）。路由为 **`UNICAST`**（**`routing_mode = 2`**），见 [routing-modes.md](./routing-modes.md) **ROUTE-02**。**`msg_type = 0x11`（`STREAM_DATA`）**。
+
+两帧信封 JSON **共享** 同一非空 **`correlation_id`**：**`corr-copilot-01`**；**`request_id`** 分别为 **`req-a1`**（A→B）与 **`req-b1`**（B→A），用于区分调用分支。
+
+**Relay 不解释信封** — 仅按帧转发；与上文「Relay 不透明」及 **04-01** 正文一致。
+
+### 帧 1：Peer A → Peer B
+
+| 相对 payload 偏移 | 示例值 | 含义 |
+|-------------------|--------|------|
+| @0 | `0x11` | **`STREAM_DATA`** |
+| @1 | `0x02` | **`UNICAST`** |
+| @2–9 | （示例） | **`src_peer_id`** = A |
+| @10–17 | （示例） | **`dst_peer_id`** = B |
+| @18–21 | `00 00 00 07` | **`stream_id`** = 7 |
+| @22 | `0x02` | **`flags`**：`HAS_APP_ENVELOPE`，无 **FIN** |
+| @23–24 | `0x00 6A` | **`payload_len`** = 106（`application_data` 总长） |
+| @25+ | 见下 | **`application_data`**：`envelope_len` + `envelope` + `body` |
+
+**`application_data` 前缀（**`envelope_len` = 92 = `0x005C`**，**`body`** = `prompt-bytes`）：**
+
+`00 5c 7b 22 63 6f 6e 74 65 6e 74 5f 74 79 70 65 22 3a 22 61 70 70 6c 69 63 61 74 69 6f 6e 2f 6a 73 6f 6e 22 2c 22 72 65 71 75 65 73 74 5f 69 64 22 3a 22 72 65 71 2d 61 31 22 2c 22 63 6f 72 72 65 6c 61 74 69 6f 6e 5f 69 64 22 3a 22 63 6f 72 72 2d 63 6f 70 69 6c 6f 74 2d 30 31 22 7d 70 72 6f 6d 70 74 2d 62 79 74 65 73`
+
+（前 **8** 个十六进制字节：`00 5c 7b 22 63 6f 6e 74 65 6e 74` — `00 5c` = 92；其后为 JSON 起始。）
+
+### 帧 2：Peer B → Peer A
+
+| 相对 payload 偏移 | 示例值 | 含义 |
+|-------------------|--------|------|
+| @0 | `0x11` | **`STREAM_DATA`** |
+| @1 | `0x02` | **`UNICAST`** |
+| @2–9 | （示例） | **`src_peer_id`** = B |
+| @10–17 | （示例） | **`dst_peer_id`** = A |
+| @18–21 | `00 00 00 07` | **同一** **`stream_id`** = 7 |
+| @22 | `0x02` | **`flags`** |
+| @23–24 | `0x00 69` | **`payload_len`** = 105 |
+| @25+ | 见下 | **`application_data`** |
+
+**`envelope`** 中 **`request_id`** 为 **`req-b1`**，**`correlation_id`** 仍为 **`corr-copilot-01`**；**`body`** = `reply-bytes`。
+
+**`application_data` 起始十六进制（前 16 字节）：**
+
+`00 5c 7b 22 63 6f 6e 74 65 6e 74 5f 74 79 70 65 22`
+
+（与帧 1 相同 **`envelope_len`**；**`envelope`** 内 **`request_id`** 字段值不同，完整字节序列由 UTF-8 编码唯一确定。）
+
+---
+
 <!-- REQ: APP-01 -->
