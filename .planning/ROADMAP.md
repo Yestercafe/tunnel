@@ -11,7 +11,7 @@
 - [x] **Phase 3: 路由与多路流** — 广播、私信、双向流、流内序与流间乱序   (completed 2026-03-29)
 - [x] **Phase 4: 可选应用信封** — content-type、请求/关联 id 与 payload 边界   (completed 2026-03-29)
 - [x] **Phase 5: 状态机、错误与安全假设** — 状态转移、错误码、关闭语义、TLS 假设文档化   (completed 2026-03-29)
-- [ ] **Phase 6: 一致性测试套件** — go test、testdata 向量、关键回归场景  
+- [x] **Phase 6: 一致性测试套件** — go test、testdata 向量、关键回归场景   (completed 2026-03-29)
 
 ## Phase Details
 
@@ -162,4 +162,4 @@ Plans:
 | 3. 路由与流 | 3/3 | Complete    | 2026-03-29 |
 | 4. 应用信封 | 2/2 | Complete    | 2026-03-29 |
 | 5. 状态机与错误 | 3/3 | Complete    | 2026-03-29 |
-| 6. 一致性测试 | 0/2 | Not started | - |
+| 6. 一致性测试 | 2/2 | Complete    | 2026-03-29 |

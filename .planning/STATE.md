@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-stopped_at: Phase 6 context gathered
-last_updated: "2026-03-29T09:06:13.220Z"
+status: idle
+stopped_at: Milestone v1.0 — all 6 phases complete
+last_updated: "2026-03-29T09:06:40.563Z"
 last_activity: 2026-03-29
 progress:
   total_phases: 6
   completed_phases: 6
   total_plans: 16
   completed_plans: 16
-  percent: 67
+  percent: 100
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-29)
 
 **Core value:** 在 TLS 由边缘/服务器终止的前提下，用同一套协议同时支撑广播、私信、双向流、大小载荷与可选应用信封；上层（含 Web、Copilot 管道等）通过**应用信封**复用。  
-**Current focus:** Phase 06 — consistency-test-suite
+**Current focus:** 里程碑 v1.0 规划阶段已完成（规范 + 一致性测试）
 
 ## Current Position
 
-Phase: 06
-Plan: Not started
-Status: Executing Phase 06
+Phase: 6（已完成）
+Plan: —
+Status: Idle — 可进入实现里程碑或新版本规划
 Last activity: 2026-03-29
 
-Progress: [██████░░░░] 67%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
