@@ -7,7 +7,7 @@
 ## Phases
 
 - [x] **Phase 1: 协议基础 — 帧与 TLS 字节流承载** — 定义帧格式、版本、能力位与 TCP+TLS 上的成帧/解析   (completed 2026-03-29)
-- [ ] **Phase 2: 会话生命周期与成员** — 创建/加入、peer 标识、可选 join token  
+- [x] **Phase 2: 会话生命周期与成员** — 创建/加入、peer 标识、可选 join token   (completed 2026-03-29)
 - [ ] **Phase 3: 路由与多路流** — 广播、私信、双向流、流内序与流间乱序  
 - [ ] **Phase 4: 可选应用信封** — content-type、请求/关联 id 与 payload 边界  
 - [ ] **Phase 5: 状态机、错误与安全假设** — 状态转移、错误码、关闭语义、TLS 假设文档化  
@@ -53,9 +53,9 @@ Plans:
 
 Plans:
 
-- [ ] 02-01: session_id / 邀请码格式与创建/加入消息  
-- [ ] 02-02: peer id 分配与在帧中的引用方式  
-- [ ] 02-03: 可选短 token 的携带位置与失败语义  
+- [x] 02-01: session_id / 邀请码格式与创建/加入消息  
+- [x] 02-02: peer id 分配与在帧中的引用方式  
+- [x] 02-03: 可选短 token 的携带位置与失败语义  
 
 **UI hint**: no  
 
@@ -158,7 +158,7 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. 帧与 TLS 字节流 | 3/3 | Complete    | 2026-03-29 |
-| 2. 会话与成员 | 0/3 | Not started | - |
+| 2. 会话与成员 | 3/3 | Complete    | 2026-03-29 |
 | 3. 路由与流 | 0/3 | Not started | - |
 | 4. 应用信封 | 0/2 | Not started | - |
 | 5. 状态机与错误 | 0/3 | Not started | - |

@@ -14,10 +14,10 @@
 
 ### 会话与成员
 
-- [ ] **SESS-01**: **创建者**可创建 session，并获得 **session_id** 与/或**邀请码**的格式说明
-- [ ] **SESS-02**: peer 可凭 **session_id / 邀请码** 加入同一 session
-- [ ] **SESS-03**: 规范描述 **成员身份**（peer id）如何分配与在帧中引用
-- [ ] **SESS-04**: 规范说明可选 **短 token / join 凭证** 的携带位置与校验失败时的行为
+- [x] **SESS-01**: **创建者**可创建 session，并获得 **session_id** 与/或**邀请码**的格式说明
+- [x] **SESS-02**: peer 可凭 **session_id / 邀请码** 加入同一 session
+- [x] **SESS-03**: 规范描述 **成员身份**（peer id）如何分配与在帧中引用
+- [x] **SESS-04**: 规范说明可选 **短 token / join 凭证** 的携带位置与校验失败时的行为
 
 ### 路由与流语义
 
@@ -68,10 +68,10 @@
 | FRAME-02 | Phase 1 | Complete |
 | FRAME-03 | Phase 1 | Complete |
 | TRANS-01 | Phase 1 | Complete |
-| SESS-01 | Phase 2 | Pending |
-| SESS-02 | Phase 2 | Pending |
-| SESS-03 | Phase 2 | Pending |
-| SESS-04 | Phase 2 | Pending |
+| SESS-01 | Phase 2 | Complete |
+| SESS-02 | Phase 2 | Complete |
+| SESS-03 | Phase 2 | Complete |
+| SESS-04 | Phase 2 | Complete |
 | ROUTE-01 | Phase 3 | Pending |
 | ROUTE-02 | Phase 3 | Pending |
 | STREAM-01 | Phase 3 | Pending |
@@ -91,4 +91,4 @@
 ---
 
 *Requirements defined: 2026-03-29*  
-*Last updated: 2026-03-29 after Phase 1 complete*
+*Last updated: 2026-03-29 after Phase 2 complete*
