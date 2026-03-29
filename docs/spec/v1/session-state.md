@@ -3,7 +3,7 @@
 ## 范围
 
 - 本文件描述：在 **单条 peer↔Relay TLS 连接** 上，与 **session 成员关系** 相关的 **控制面** 状态与转移（**非**成帧半包、**非**单条 `stream_id` 的 OPEN/CLOSE）。
-- **TLS 与成帧**前提见 [transport-binding.md](./transport-binding.md) 与 [connection-state.md](./connection-state.md)；**CREATE/JOIN 消息体与 opcode** 见 [session-create-join.md](./session-create-join.md)；**凭证与 ERR 占位** 见 [join-credentials.md](./join-credentials.md)。
+- **TLS 与成帧**前提见 [transport-binding.md](./transport-binding.md) 与 [connection-state.md](./connection-state.md)；**CREATE/JOIN 控制消息序列** 见 [session-create-join.md](./session-create-join.md)（`docs/spec/v1/session-create-join.md`）；**凭证与 ERR 占位** 见 [join-credentials.md](./join-credentials.md)。
 
 ## 主路径（成功）
 
@@ -16,7 +16,7 @@
 ### 数据面前置条件（门禁）
 
 - 在 **收到 `SESSION_JOIN_ACK` 且 `peer_id` 有效** 之前，**MUST NOT** 发送带 [routing-modes.md](./routing-modes.md) 所定义 **数据面路由前缀** 的帧（即「未 ACK 前不得发送数据面路由帧」）。
-- 流上的 OPEN/DATA/CLOSE 语义见 [streams-lifecycle.md](./streams-lifecycle.md)；**未 JOIN_ACK 前** 不得将 **数据面** `STREAM_*` 与 **session 成员** 语义混用为「已可路由」。
+- 流上的 OPEN/DATA/CLOSE 语义见 [streams-lifecycle.md](./streams-lifecycle.md)（`docs/spec/v1/streams-lifecycle.md`）；**数据面须在 JOIN_ACK 之后**：**未 JOIN_ACK 前** 不得将 **数据面** `STREAM_*` 与 **session 成员** 语义混用为「已可路由」。
 
 ## 失败路径（占位错误名）
 

@@ -4,7 +4,7 @@
 
 - 本文件仅描述：**TLS 应用数据已可读** 之后，在 **明文字节流**（与 [transport-binding.md](./transport-binding.md) 前提一致）上进行的 **成帧解析状态机**。
 - **不包含**：session 成员关系、`SESSION_*` 控制消息语义、数据面路由或流生命周期 —— 那些属于 [session-state.md](./session-state.md) 与 [streams-lifecycle.md](./streams-lifecycle.md)。
-- 成帧层从 **空接收缓冲区** 开始，按与 `transport-binding.md` **相同的编号步骤**（读入 → 至少 10 字节头 → `payload_len` → 收满整帧 → 交付）循环运行；下文用 **状态 / 事件** 视角复述，避免与 session 层状态混写。
+- 成帧层从 **空接收缓冲区** 开始，按与 **`docs/spec/v1/transport-binding.md`**（同页 [transport-binding.md](./transport-binding.md)）**相同的编号步骤**与 **成帧解析循环**（读入 → 至少 10 字节头 → `payload_len` → 收满整帧 → 交付）循环运行；下文用 **状态 / 事件** 视角复述，避免与 session 层状态混写。
 
 ## 与 transport-binding 的对应关系
 
