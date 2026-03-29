@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: planning
-stopped_at: Phase 3 complete — ready for Phase 4
-last_updated: "2026-03-29T08:00:00.000Z"
-last_activity: 2026-03-29
+status: executing
+stopped_at: Phase 3 complete；下一步 Phase 4（应用信封）
+last_updated: "2026-03-29T08:02:02.450Z"
+last_activity: 2026-03-29 -- Phase 04 execution started
 progress:
   total_phases: 6
   completed_phases: 3
-  total_plans: 9
+  total_plans: 11
   completed_plans: 9
   percent: 50
 ---
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-29)
 
 **Core value:** 在 TLS 由边缘/服务器终止的前提下，用同一套协议同时支撑广播、私信、双向流、大小载荷与可选应用信封；上层（含 Web、Copilot 管道等）通过**应用信封**复用。  
-**Current focus:** Phase 4 — 可选应用信封
+**Current focus:** Phase 04 — optional-app-envelope
 
 ## Current Position
 
-Phase: 4 of 6（可选应用信封）  
-Plan: Not started in current phase  
-Status: Phase 3 complete — ready to plan / execute Phase 4  
-Last activity: 2026-03-29 — 路由与流规范已发布  
+Phase: 04 (optional-app-envelope) — EXECUTING
+Plan: 1 of 2
+Status: Executing Phase 04
+Last activity: 2026-03-29 -- Phase 04 execution started
 
 Progress: [█████░░░░░] 50%
 
