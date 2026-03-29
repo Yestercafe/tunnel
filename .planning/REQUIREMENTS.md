@@ -64,10 +64,10 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| FRAME-01 | Phase 1 | Pending |
-| FRAME-02 | Phase 1 | Pending |
-| FRAME-03 | Phase 1 | Pending |
-| TRANS-01 | Phase 1 | Pending |
+| FRAME-01 | Phase 1 | Complete |
+| FRAME-02 | Phase 1 | Complete |
+| FRAME-03 | Phase 1 | Complete |
+| TRANS-01 | Phase 1 | Complete |
 | SESS-01 | Phase 2 | Pending |
 | SESS-02 | Phase 2 | Pending |
 | SESS-03 | Phase 2 | Pending |
@@ -91,4 +91,4 @@
 ---
 
 *Requirements defined: 2026-03-29*  
-*Last updated: 2026-03-29 after dropping WebSocket as v1 transport*
+*Last updated: 2026-03-29 after Phase 1 complete*
