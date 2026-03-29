@@ -26,6 +26,25 @@
 - **顺序模型**：**流内有序、流间可乱序**。  
 - **GSD**：重大改动宜经 GSD 工作流（规则内述）。
 
+## Findings
+
+### STATE-01：连接 / 会话 / 流三层正交
+
+- **连接级**：`transport-binding.md` 的**成帧解析循环**（半包/粘包/最大帧长）与 **TLS 已建立、应用数据可读**的前提分开写。  
+- **Session 级**：`SESSION_CREATE_*` / `SESSION_JOIN_*` 与 `join-credentials.md` 的成功/失败路径；**未 JOIN_ACK 前**不得发送数据面路由帧（与现有控制面/数据面分离一致）。  
+- **流级**：`streams-lifecycle.md` 的 OPEN / DATA+FIN / CLOSE；**不得**在 SESSION 控制消息中带 `stream_id`。
+
+### ERR-01：占位名收敛与传输层关系
+
+- 既有占位：**`ERR_FRAME_TOO_LARGE`**、**`ERR_PROTO_VERSION`**（`pkg/framing` 已对齐符号）、**`ERR_JOIN_DENIED`**、**`ERR_SESSION_NOT_FOUND`**；路由/信封等需**新增**表项。  
+- **TLS/TCP**：Go 中可对 `Read`/`Close` 错误 **unwrap `tls.AlertError`**（[pkg.go.dev/crypto/tls#AlertError](https://pkg.go.dev/crypto/tls#AlertError)）；**不要**在规范里写死「某 ERR ↔ 某 alert 字节」。**TCP**：对端关闭 → `EOF` / 读错误；与**应用层错误帧**并列描述。  
+- **版本策略**：`version-capability.md` 已要求不支持版本时 **先发错误指示（线格式 Phase 5）再关 TLS**；无法实现时允许直接关 TCP。
+
+### SEC-01：TLS 边缘终止与无 E2E
+
+- **机密性/完整性**在 **TLS 段**内由 **边缘/服务器证书域**保证；**Relay 进程内**解析的是**明文逻辑帧**。  
+- **v1 不提供**端到端加密；若需防中继窃听，走 **部署隔离 / mTLS / 应用层加密** 或 **v2 SEC-02**，在 `security-assumptions.md` 中逐条列出「提供 / 不提供」。
+
 ## Summary
 
 Phase 5 的目标是把 **Phase 1–4 已分散描述的行为**收敛为三类可交付物：**（1）** 覆盖主路径与失败路径的**状态机叙述**（至少区分「TLS/字节流成帧」「会话成员关系」「逻辑流」三层）；**（2）** 将各文档中的 **`ERR_*` 占位名**升格为可测试、可引用的**错误码目录**，并说明**中止**时是否先发应用层错误指示、再关 TLS/TCP，以及与 **TLS alert**、**TCP 半关闭/全关闭**、**对端 EOF** 的观测关系；**（3）** 用短文档写清 **TLS 在边缘终止**时的信任边界、**中继可见明文**的含义、以及 v1 **不做 E2E** 的产品/部署含义。
