@@ -10,6 +10,7 @@
 | [version-capability.md](./version-capability.md) | 协议版本与 capability 位图（FRAME-02、FRAME-03） | 已发布 |
 | [transport-binding.md](./transport-binding.md) | TLS 字节流上的成帧与解析（TRANS-01） | 已发布 |
 | [session-create-join.md](./session-create-join.md) | session 创建/加入、session_id 与邀请码、控制消息 opcode（SESS-01、SESS-02） | 已发布 |
+| [peer-identity.md](./peer-identity.md) | peer_id（uint64）分配、会话内唯一性、与 JOIN 响应一致（SESS-03） | 已发布 |
 
 ## 字节序
 
