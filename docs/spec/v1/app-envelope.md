@@ -61,6 +61,30 @@
 
 **Relay** 对 **`envelope`** 内 JSON **不解析**、不校验键名；仅按 **`STREAM_DATA`** 帧边界与路由前缀转发，与数据面路由规范一致。
 
+## 端到端示例 A：JSON 请求/响应
+
+下列为 **一帧** **`STREAM_DATA`**：**`HAS_APP_ENVELOPE = 1`**，**`FIN = 0`**，故 **`flags = 0x02`**（仅 bit1）。**`body`** 为 UTF-8 JSON 负载 **`{"ok":true}`**（演示最小应答体）。**`envelope`** UTF-8 文本为：
+
+`{"content_type":"application/json","request_id":"req-7a2f"}`（长度 **59** 字节；**无** `correlation_id` 键，互操作上允许）。
+
+**配对语义（v1 示例约定）：** **应答帧**亦为 **`STREAM_DATA`** 且 **`HAS_APP_ENVELOPE = 1`** 时，在 **`envelope`** 中使用 **相同** **`request_id`**（本例 **`req-7a2f`**）以与请求配对；**`body`** 承载应答 JSON（具体形状由应用定义，本规范不约束）。
+
+### 请求帧：`application_data` 分解（相对 **payload** 起点）
+
+| 相对 payload 偏移 | 长度（字节） | 含义 |
+|-------------------|-------------|------|
+| @25–26 | 2 | **`envelope_len` = `0x003B`（59，uint16 BE）** |
+| @27–85 | 59 | **`envelope`**（上列 JSON UTF-8） |
+| @86–96 | 11 | **`body`**：`{"ok":true}` |
+
+本例 **`payload_len` = 72**（`0x0048`），即 **`application_data`** 总长 72 字节。
+
+**`application_data` 起始十六进制（连续 16 字节，可对照上表）：**
+
+`00 3B 7B 22 63 6F 6E 74 65 6E 74 5F 74 79 70 65`
+
+（`00 3B` = **59** 大端；随后为 JSON 开头 `{"content_type`…）
+
 ---
 
 <!-- REQ: APP-01 -->
