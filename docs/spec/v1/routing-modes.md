@@ -69,3 +69,55 @@
 ---
 
 <!-- REQ: ROUTE-01 -->
+
+## 单播（ROUTE-02）
+
+### 枚举与字段
+
+- **`routing_mode = 2`（`UNICAST`）** 与 **`BROADCAST = 1`** 并列；**`routing_mode = 0`** 仍为非法（见上文）。
+- **`src_peer_id`**：**MUST** 为发送方 **`uint64` BE**（与广播一致），语义见 [peer-identity.md](./peer-identity.md)。
+- **`dst_peer_id`**：**MUST** 为 **非零** `uint64` BE，且表示 **该 session 内** 目标 peer（与 `SESSION_JOIN_ACK` 分配规则一致；**`0`** 保留语义见 `SESS-03`，**不得**作为有效单播目标）。
+
+### 与广播的联合判定
+
+实现 **MUST** 使用 **`routing_mode` 与 `dst_peer_id` 是否为零** 联合判定意图：
+
+- **`routing_mode = BROADCAST` 且 `dst_peer_id = 0`** → 广播语义（见上文）。
+- **`routing_mode = UNICAST` 且 `dst_peer_id ≠ 0`** → 单播语义（本节）。
+- **禁止**仅凭单一字段推断对端模式（例如不得假设「`dst_peer_id ≠ 0` 即单播」而忽略错误的 `routing_mode`）。
+
+### 发往自身 peer_id
+
+若 **`dst_peer_id`** 与发送方在该 session 已分配的 **`peer_id`** **相等**（发往自身）：
+
+- 实现 **MUST** 采用下列 **之一**（实现 **MUST** 在文档/能力声明中固定所选策略，且 **不得** 将此类帧当作有效投递）：
+  1. **静默丢弃**该帧（不转发、不投递、不触发应用数据交付）；或
+  2. **协议错误**路径：关闭连接或返回应答，**具体错误码与报文见 Phase 5 `ERR_*` 规范**。
+
+### Relay 行为（单播）
+
+当 **`routing_mode = UNICAST`** 且 **`dst_peer_id`** 为合法非零会话成员时：
+
+1. Relay **MUST** 仅将帧投递到 **`dst_peer_id`** 所绑定的 **前向 TLS 连接**（见 Phase 2 成员表）。
+2. 若 **`dst_peer_id`** **未知**、**非成员**或 **尚无已加入连接**：Relay **MUST** **丢弃**该帧 **或** 按 Phase 5 **ERR** 规范返回错误/关闭（具体码见 ERR 占位）；**MUST NOT** 向其它 peer 误投递。
+
+### 完整逻辑帧示例（单播）
+
+下列为一帧：**10 字节帧头** + **payload**（**`payload_len = 22`**）。payload 以 **`STREAM_DATA`（`msg_type = 0x11`）** 开头，**`routing_mode = UNICAST（0x02）`**，**`src_peer_id = 0xab`**、**`dst_peer_id = 0xcd`**（均为非零示例），随后 **4 字节 `stream_id` 占位**。
+
+```
+00 00 00 16  00 01  00 00 00 00
+11 02  00 00 00 00 00 00 00 ab  00 00 00 00 00 00 00 cd  00 00 00 00
+```
+
+| 片段 | 含义 |
+|------|------|
+| `11` | `msg_type = STREAM_DATA`（`0x11`） |
+| `02` | `routing_mode = UNICAST` |
+| `00 00 00 00 00 00 00 ab` | `src_peer_id` |
+| `00 00 00 00 00 00 00 cd` | `dst_peer_id`（非零） |
+| `00 00 00 00` | `stream_id` 占位（见 `streams-lifecycle.md`） |
+
+---
+
+<!-- REQ: ROUTE-02 -->
