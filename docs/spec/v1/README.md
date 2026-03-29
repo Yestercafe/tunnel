@@ -12,6 +12,7 @@
 | [session-create-join.md](./session-create-join.md) | session 创建/加入、session_id 与邀请码、控制消息 opcode（SESS-01、SESS-02） | 已发布 |
 | [peer-identity.md](./peer-identity.md) | peer_id（uint64）分配、会话内唯一性、与 JOIN 响应一致（SESS-03） | 已发布 |
 | [join-credentials.md](./join-credentials.md) | 可选 join token 位置、长度与 ERR 占位（SESS-04） | 已发布 |
+| [routing-modes.md](./routing-modes.md) | 数据面路由前缀；广播（ROUTE-01） | 已发布 |
 
 ## 字节序
 
