@@ -1,0 +1,19 @@
+# Tunnel — v1 协议规范
+
+本目录收录 **Tunnel** 传输隧道 **v1** 的二进制协议规范文档（Phase 1：帧与 TLS 字节流承载）。
+
+## 文档索引
+
+| 文档 | 说明 | 状态 |
+|------|------|------|
+| [frame-layout.md](./frame-layout.md) | 固定帧头、长度字段、payload 边界（FRAME-01） | 已发布 |
+| [version-capability.md](./version-capability.md) | 协议版本与 capability 位图（FRAME-02、FRAME-03） | 已发布 |
+| [transport-binding.md](./transport-binding.md) | TLS 字节流上的成帧与解析（TRANS-01） | 已发布 |
+
+## 字节序
+
+除特别声明外，多字节整数均为 **大端（big-endian，网络字节序）**，与 Go `encoding/binary.BigEndian` 一致。
+
+## 版本
+
+规范版本与 `frame-layout.md` 中的 **protocol version** 字段配合使用；当前正文对应 **v1** 帧布局。
