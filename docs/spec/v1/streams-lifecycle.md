@@ -2,7 +2,7 @@
 
 ## 范围
 
-本规范定义 **数据面** 上 **逻辑流** 的 opcode、payload 布局、`stream_id` 规则，以及 **流内有序 / 流间乱序** 语义。固定 **10 字节帧头** 与 **payload** 边界见 [frame-layout.md](./frame-layout.md)；**路由前缀**（`msg_type` + `routing_mode` + `src_peer_id` + `dst_peer_id`，共 **18** 字节）见 [routing-modes.md](./routing-modes.md)。**控制面** `SESSION_*` 消息 **不** 携带 `stream_id`。
+本规范定义 **数据面** 上 **逻辑流** 的 opcode、payload 布局、`stream_id` 规则，以及 **流内有序 / 流间乱序** 语义。**连接级成帧**与 **TLS 字节流** 见 [connection-state.md](./connection-state.md) / [transport-binding.md](./transport-binding.md)；**session 成员与 JOIN 门禁** 见 [session-state.md](./session-state.md)。本文 **仅** 覆盖 **流** 生命周期，不重复 OPEN/DATA/CLOSE 以外的层。固定 **10 字节帧头** 与 **payload** 边界见 [frame-layout.md](./frame-layout.md)；**路由前缀**（`msg_type` + `routing_mode` + `src_peer_id` + `dst_peer_id`，共 **18** 字节）见 [routing-modes.md](./routing-modes.md)。**控制面** `SESSION_*` 消息 **不** 携带 `stream_id`。
 
 ## 数据面 `msg_type` opcode 表
 
