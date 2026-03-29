@@ -18,9 +18,9 @@ const VersionV1 = 0x0001
 var (
 	// ErrNeedMore indicates the buffer does not yet contain a full frame.
 	ErrNeedMore = errors.New("need more data")
-	// ErrFrameTooLarge corresponds to ERR_FRAME_TOO_LARGE in the spec.
+	// ErrFrameTooLarge corresponds to ERR_FRAME_TOO_LARGE in the spec (ErrCodeFrameTooLarge in docs/spec/v1/errors.md).
 	ErrFrameTooLarge = errors.New("ERR_FRAME_TOO_LARGE")
-	// ErrProtoVersion corresponds to ERR_PROTO_VERSION in the spec.
+	// ErrProtoVersion corresponds to ERR_PROTO_VERSION in the spec (ErrCodeProtoVersion in docs/spec/v1/errors.md).
 	ErrProtoVersion = errors.New("ERR_PROTO_VERSION")
 )
 
