@@ -13,6 +13,7 @@
 | [peer-identity.md](./peer-identity.md) | peer_id（uint64）分配、会话内唯一性、与 JOIN 响应一致（SESS-03） | 已发布 |
 | [join-credentials.md](./join-credentials.md) | 可选 join token 位置、长度与 ERR 占位（SESS-04） | 已发布 |
 | [routing-modes.md](./routing-modes.md) | 数据面路由前缀；广播（ROUTE-01）、单播（ROUTE-02） | 已发布 |
+| [streams-lifecycle.md](./streams-lifecycle.md) | 流 opcode（OPEN/DATA/CLOSE）、`stream_id`、双向流与顺序（STREAM-01、STREAM-02） | 已发布 |
 
 ## 字节序
 
