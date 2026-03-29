@@ -1,6 +1,6 @@
 # Tunnel — v1 协议规范
 
-本目录收录 **Tunnel** 传输隧道 **v1** 的二进制协议规范文档（Phase 1：帧与 TLS 字节流承载）。
+本目录收录 **Tunnel** 传输隧道 **v1** 的二进制协议规范文档（Phase 1：帧与 TLS 字节流承载；Phase 2：会话创建与加入等）。
 
 ## 文档索引
 
@@ -9,6 +9,7 @@
 | [frame-layout.md](./frame-layout.md) | 固定帧头、长度字段、payload 边界（FRAME-01） | 已发布 |
 | [version-capability.md](./version-capability.md) | 协议版本与 capability 位图（FRAME-02、FRAME-03） | 已发布 |
 | [transport-binding.md](./transport-binding.md) | TLS 字节流上的成帧与解析（TRANS-01） | 已发布 |
+| [session-create-join.md](./session-create-join.md) | session 创建/加入、session_id 与邀请码、控制消息 opcode（SESS-01、SESS-02） | 已发布 |
 
 ## 字节序
 
