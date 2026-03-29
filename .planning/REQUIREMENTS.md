@@ -32,9 +32,9 @@
 
 ### 状态机、错误与文档化假设
 
-- [ ] **STATE-01**: 文档化连接级与 session 级 **状态机**（状态、事件、转移）
-- [ ] **ERR-01**: 定义 **错误码目录** 与 **连接/会话中止原因**（与 TLS alert、TCP 断开的文档关系可简述）
-- [ ] **SEC-01**: 文档化安全假设：**TLS 在边缘/服务器终止**；协议内**不负责 E2E 加密**（v1）
+- [x] **STATE-01**: 文档化连接级与 session 级 **状态机**（状态、事件、转移）
+- [x] **ERR-01**: 定义 **错误码目录** 与 **连接/会话中止原因**（与 TLS alert、TCP 断开的文档关系可简述）
+- [x] **SEC-01**: 文档化安全假设：**TLS 在边缘/服务器终止**；协议内**不负责 E2E 加密**（v1）
 
 ### 一致性测试
 
@@ -77,9 +77,9 @@
 | STREAM-01 | Phase 3 | Complete |
 | STREAM-02 | Phase 3 | Complete |
 | APP-01 | Phase 4 | Pending |
-| STATE-01 | Phase 5 | Pending |
-| ERR-01 | Phase 5 | Pending |
-| SEC-01 | Phase 5 | Pending |
+| STATE-01 | Phase 5 | Complete |
+| ERR-01 | Phase 5 | Complete |
+| SEC-01 | Phase 5 | Complete |
 | TEST-01 | Phase 6 | Pending |
 
 **Coverage:**
@@ -91,4 +91,4 @@
 ---
 
 *Requirements defined: 2026-03-29*  
-*Last updated: 2026-03-29 after Phase 3 complete*
+*Last updated: 2026-03-29 after Phase 5 complete (STATE-01, ERR-01, SEC-01)*
