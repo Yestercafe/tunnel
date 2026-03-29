@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: planning
-stopped_at: Phase 4 complete — ready for Phase 5
-last_updated: "2026-03-29T12:00:00.000Z"
-last_activity: 2026-03-29
+status: executing
+stopped_at: Phase 4 完成；下一步 Phase 5（状态机、错误码、SEC-01）
+last_updated: "2026-03-29T08:36:08.277Z"
+last_activity: 2026-03-29 -- Phase 05 execution started
 progress:
   total_phases: 6
   completed_phases: 4
-  total_plans: 11
+  total_plans: 14
   completed_plans: 11
   percent: 67
 ---
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-29)
 
 **Core value:** 在 TLS 由边缘/服务器终止的前提下，用同一套协议同时支撑广播、私信、双向流、大小载荷与可选应用信封；上层（含 Web、Copilot 管道等）通过**应用信封**复用。  
-**Current focus:** Phase 5 — 状态机、错误与安全假设
+**Current focus:** Phase 05 — state-machine-errors-security
 
 ## Current Position
 
-Phase: 5 of 6（状态机、错误与安全假设）  
-Plan: Not started in current phase  
-Status: Phase 4 complete — ready to plan / execute Phase 5  
-Last activity: 2026-03-29 — APP-01 与端到端示例已落地  
+Phase: 05 (state-machine-errors-security) — EXECUTING
+Plan: 1 of 3
+Status: Executing Phase 05
+Last activity: 2026-03-29 -- Phase 05 execution started
 
 Progress: [██████░░░░] 67%
 
