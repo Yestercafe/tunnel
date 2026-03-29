@@ -31,7 +31,7 @@
 ### 收到未知或不支持的版本时
 
 1. 接收方 **MUST NOT** 继续按本规范解析后续 payload（可能不兼容）。
-2. 接收方 **SHOULD** 发送 **协议错误指示**（具体帧格式由 Phase 5 定义；本阶段占位名 **`ERR_PROTO_VERSION`**），并 **MUST** **关闭 TLS 连接**。
+2. 接收方 **SHOULD** 先发送 **`PROTOCOL_ERROR`**（`msg_type = 0x05`，载荷见 **`docs/spec/v1/errors.md`** / [errors.md](./errors.md)），**`err_code` = `ERR_PROTO_VERSION`**（`0x0002`），并 **MUST** **关闭 TLS 连接**。
 3. 若尚无法发送错误帧，**可直接关闭 TCP 连接**。
 
 ### 同主版本、更高次版本

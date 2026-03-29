@@ -37,7 +37,7 @@
 2. **`envelope`**：紧随其后的 **`envelope_len` 字节**，为 UTF-8 JSON 文本（见「JSON schema 子集」）。
 3. **`body`**：剩余字节，直至 **`application_data` 末尾**。
 
-**约束：** **`2 + envelope_len ≤ payload_len`**。若违反则解码失败，错误码占位（**ERR_***）见 Phase 5 错误枚举；实现 **MUST** 拒绝该帧或按实现策略报错，**不得**静默截断互操作。
+**约束：** **`2 + envelope_len ≤ payload_len`**。若违反则解码失败，**`err_code`** 使用 **`ERR_ENVELOPE_INVALID`**（见 [errors.md](./errors.md)）；实现 **MUST** 拒绝该帧或按实现策略报错，**不得**静默截断互操作。
 
 ## JSON schema 子集（互操作）
 
@@ -55,7 +55,7 @@
 
 - **最大 `envelope_len`（v1）**：**4096** 字节。
 - 须 **≤** 帧级 **`payload_len`** 与 **`2 + envelope_len ≤ payload_len`** 一致。
-- 若 **`envelope_len` > 4096** 或 JSON 无效/非 UTF-8，视为协议或解码错误（**ERR_***，Phase 5）。
+- 若 **`envelope_len` > 4096** 或 JSON 无效/非 UTF-8，视为协议或解码错误（**`ERR_ENVELOPE_INVALID`**，见 [errors.md](./errors.md)）。
 
 ## Relay 不透明
 

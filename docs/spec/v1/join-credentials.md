@@ -2,7 +2,7 @@
 
 ## 范围
 
-本规范描述 **可选** 的 **join token**（加入凭证）：何时需要、在 **`SESSION_JOIN_REQ`** 消息体中的位置与长度限制，以及校验失败时使用的 **占位错误名**（与 Phase 5 错误码目录对齐）。**加入 session 的主路径**（`join_by`、`credential`、成功/失败概览）见 [session-create-join.md](./session-create-join.md)。
+本规范描述 **可选** 的 **join token**（加入凭证）：何时需要、在 **`SESSION_JOIN_REQ`** 消息体中的位置与长度限制，以及校验失败时使用的 **占位错误名**（数值码与线格式见 [errors.md](./errors.md)，**ERR-01**）。**加入 session 的主路径**（`join_by`、`credential`、成功/失败概览）见 [session-create-join.md](./session-create-join.md)。
 
 ## 何时需要 token
 
@@ -29,14 +29,14 @@
 
 ## 校验失败与 session 不存在
 
-下列为 **占位错误名**；在 Phase 5（`ERR-01`）中将纳入统一错误码目录，并与连接/session 关闭原因绑定。
+下列为 **占位错误名**；与 **`uint16 err_code`** 及 **`PROTOCOL_ERROR`** 线格式的对应关系见 [errors.md](./errors.md)。
 
 | 情形 | 占位错误名 | 说明 |
 |------|-------------|------|
 | Relay 策略要求 join token，但缺失、错误或校验不通过 | **`ERR_JOIN_DENIED`** | 拒绝本次 **JOIN**；不分配 `peer_id` |
 | `credential` 指向的 **session** 不存在或已失效（与 `join_by` 模式一致） | **`ERR_SESSION_NOT_FOUND`** | 与 Phase 5 会话查找语义对齐 |
 
-实现 **SHOULD** 在拒绝 **JOIN** 时向 client 返回可区分上述情形的错误信息（具体帧格式由 Phase 5 定义）。
+实现 **SHOULD** 在拒绝 **JOIN** 时向 client 返回 **`PROTOCOL_ERROR`**，**`err_code`** 使用上表对应符号（见 [errors.md](./errors.md)）。
 
 ## 成功路径
 

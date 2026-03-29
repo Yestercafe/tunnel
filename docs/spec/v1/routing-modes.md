@@ -28,7 +28,7 @@
 
 | 值（名称） | 说明 |
 |------------|------|
-| **`0`** | **保留为非法/未指定**。实现 **MUST** 拒绝解析、丢弃该帧或关闭连接，具体错误码与报文见 Phase 5 **ERR** 规范（与 [join-credentials.md](./join-credentials.md) 中 ERR 占位对齐）。 |
+| **`0`** | **保留为非法/未指定**。实现 **MUST** 拒绝解析、丢弃该帧或关闭连接；**`err_code`** 使用 **`ERR_ROUTING_INVALID`**（见 [errors.md](./errors.md)）。 |
 | **`1`（`BROADCAST`）** | **广播**：意图为向同一 **session** 内 **除发送者外** 全体成员投递；**`dst_peer_id` MUST 为 `0`**。 |
 
 > 单播（`UNICAST`）见同文件后续章节（`ROUTE-02`）。
@@ -92,14 +92,14 @@
 
 - 实现 **MUST** 采用下列 **之一**（实现 **MUST** 在文档/能力声明中固定所选策略，且 **不得** 将此类帧当作有效投递）：
   1. **静默丢弃**该帧（不转发、不投递、不触发应用数据交付）；或
-  2. **协议错误**路径：关闭连接或返回应答，**具体错误码与报文见 Phase 5 `ERR_*` 规范**。
+  2. **协议错误**路径：关闭连接或返回 **`PROTOCOL_ERROR`**，**`err_code`** 见 [errors.md](./errors.md)。
 
 ### Relay 行为（单播）
 
 当 **`routing_mode = UNICAST`** 且 **`dst_peer_id`** 为合法非零会话成员时：
 
 1. Relay **MUST** 仅将帧投递到 **`dst_peer_id`** 所绑定的 **前向 TLS 连接**（见 Phase 2 成员表）。
-2. 若 **`dst_peer_id`** **未知**、**非成员**或 **尚无已加入连接**：Relay **MUST** **丢弃**该帧 **或** 按 Phase 5 **ERR** 规范返回错误/关闭（具体码见 ERR 占位）；**MUST NOT** 向其它 peer 误投递。
+2. 若 **`dst_peer_id`** **未知**、**非成员**或 **尚无已加入连接**：Relay **MUST** **丢弃**该帧 **或** 返回 **`PROTOCOL_ERROR`** / 关闭连接（**`err_code`** 见 [errors.md](./errors.md)）；**MUST NOT** 向其它 peer 误投递。
 
 ### 完整逻辑帧示例（单播）
 

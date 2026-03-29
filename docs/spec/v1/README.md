@@ -9,6 +9,7 @@
 | [frame-layout.md](./frame-layout.md) | 固定帧头、长度字段、payload 边界（FRAME-01） | 已发布 |
 | [version-capability.md](./version-capability.md) | 协议版本与 capability 位图（FRAME-02、FRAME-03） | 已发布 |
 | [transport-binding.md](./transport-binding.md) | TLS 字节流上的成帧与解析（TRANS-01） | 已发布 |
+| [errors.md](./errors.md) | 应用层错误码目录与 `PROTOCOL_ERROR`（`0x05`）线格式（ERR-01） | 已发布 |
 | [connection-state.md](./connection-state.md) | 连接级成帧解析状态、半包/粘包与致命错误边界（STATE-01） | 已发布 |
 | [session-state.md](./session-state.md) | session 成员关系、JOIN 门禁与失败路径占位（STATE-01） | 已发布 |
 | [session-create-join.md](./session-create-join.md) | session 创建/加入、session_id 与邀请码、控制消息 opcode（SESS-01、SESS-02） | 已发布 |
