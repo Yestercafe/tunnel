@@ -1,0 +1,19 @@
+# Phase 6 / TEST-01 — CI: 与 go.mod 的 Go 版本一致，可重复执行测试
+name: go
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.22"
+      - name: Test
+        run: go test ./... -count=1
