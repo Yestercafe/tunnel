@@ -17,6 +17,7 @@
 - ✓ **v1 帧布局、版本/capability、TLS 字节流成帧** — 见 `docs/spec/v1/`；参考实现 `pkg/framing`（Phase 1）
 - ✓ **会话创建/加入、peer_id、可选 join token** — `session-create-join.md`、`peer-identity.md`、`join-credentials.md`（Phase 2）
 - ✓ **路由（广播/单播）与流生命周期、流内/流间顺序** — `routing-modes.md`、`streams-lifecycle.md`（Phase 3）
+- ✓ **可选应用信封（UTF-8 JSON、`HAS_APP_ENVELOPE`、请求/关联 id 边界）** — `app-envelope.md`、`pkg/appenvelope`（Phase 4）
 
 ### Active
 
@@ -24,7 +25,7 @@
 - [ ] 一致性测试：可机器执行的用例/向量，覆盖规范中的关键行为
 - [x] 会话语义：创建者创建 session；成员凭 `session_id`/邀请码加入；**同 session 内默认广播**（除发送者外均收到）；支持**私信/单播**至指定 peer — Phase 2–3 已规范会话成员与路由投递
 - [x] 传输语义：**双向流**；**按流（或逻辑通道）内有序**，**流之间允许乱序** — Phase 3 已写入 `streams-lifecycle.md`
-- [ ] 分层：帧之上**可选应用信封**（如 content-type、请求 id、关联 id）
+- [x] 分层：帧之上**可选应用信封**（如 content-type、请求 id、关联 id）— Phase 4 已写入 `app-envelope.md` 与 `streams-lifecycle.md`
 - [ ] 成员与连接：协议内会话与成员逻辑；可配合**短 token**；不将端到端加密作为 v1 必选项
 - [x] **传输承载**：v1 规范以 **TLS 之上的字节流（典型为 TCP + TLS）** 为参考路径；**成帧、粘包与流边界**在规范中写清（不依赖 WebSocket）— Phase 1 已文档化
 
@@ -55,7 +56,7 @@
 | 会话模型：创建者开房 + 邀请加入 | 简单可解释，适合固定小团队 | — Pending |
 | 默认广播 + 私信 | 兼顾协作广播与点对点控制/回复 | — Pending |
 | 流内有序、流间乱序 | 适配多路复用与浏览器/异步 IO | — Pending |
-| 可选应用信封 | 让 HTTP 风格与 Copilot 管道共享隧道 | — Pending |
+| 可选应用信封 | 让 HTTP 风格与 Copilot 管道共享隧道 | v1：`app-envelope.md`（JSON）、`HAS_APP_ENVELOPE`；Phase 4 |
 | TLS 在边缘、协议内会话/成员 + 可选短 token | 与「公网中继」部署方式一致 | — Pending |
 | 帧头预留版本与 capability | 为未来扩展（传输、加密策略等）留余地 | — Pending |
 | Go 实现 | 静态编译、并发与网络生态成熟 | — Pending |
@@ -82,4 +83,4 @@
 
 ---
 
-*Last updated: 2026-03-29 after Phase 3 execution*
+*Last updated: 2026-03-29 after Phase 4 execution*

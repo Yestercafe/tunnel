@@ -9,7 +9,7 @@
 - [x] **Phase 1: 协议基础 — 帧与 TLS 字节流承载** — 定义帧格式、版本、能力位与 TCP+TLS 上的成帧/解析   (completed 2026-03-29)
 - [x] **Phase 2: 会话生命周期与成员** — 创建/加入、peer 标识、可选 join token   (completed 2026-03-29)
 - [x] **Phase 3: 路由与多路流** — 广播、私信、双向流、流内序与流间乱序   (completed 2026-03-29)
-- [ ] **Phase 4: 可选应用信封** — content-type、请求/关联 id 与 payload 边界  
+- [x] **Phase 4: 可选应用信封** — content-type、请求/关联 id 与 payload 边界   (completed 2026-03-29)
 - [ ] **Phase 5: 状态机、错误与安全假设** — 状态转移、错误码、关闭语义、TLS 假设文档化  
 - [ ] **Phase 6: 一致性测试套件** — go test、testdata 向量、关键回归场景  
 
@@ -99,8 +99,8 @@ Plans:
 
 Plans:
 
-- [ ] 04-01: 信封编码（如长度前缀 TLV 或 JSON 头 — 由规范选定）  
-- [ ] 04-02: 示例场景与正/反向关联 id 用法  
+- [x] 04-01: 信封编码（如长度前缀 TLV 或 JSON 头 — 由规范选定）  
+- [x] 04-02: 示例场景与正/反向关联 id 用法  
 
 **UI hint**: no  
 
@@ -160,6 +160,6 @@ Plans:
 | 1. 帧与 TLS 字节流 | 3/3 | Complete    | 2026-03-29 |
 | 2. 会话与成员 | 3/3 | Complete    | 2026-03-29 |
 | 3. 路由与流 | 3/3 | Complete    | 2026-03-29 |
-| 4. 应用信封 | 0/2 | Not started | - |
+| 4. 应用信封 | 2/2 | Complete    | 2026-03-29 |
 | 5. 状态机与错误 | 0/3 | Not started | - |
 | 6. 一致性测试 | 0/2 | Not started | - |
