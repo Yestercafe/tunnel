@@ -44,9 +44,9 @@
 |------|------|------|------|------|
 | （路由前缀） | 0–17 | 18 | — | 含 `msg_type = 0x11`。 |
 | `stream_id` | 18 | 4 | `uint32` BE | 目标流。 |
-| `flags` | 22 | 1 | `uint8` | **bit 0**：**`FIN`**（`1` = 发送方结束本流上后续应用数据）；其余位保留，发送方 **MUST** 置 **`0`**，接收方 **MUST** 忽略未知位。 |
+| `flags` | 22 | 1 | `uint8` | **bit 0**：**`FIN`**（`1` = 发送方结束本流上后续应用数据）。**bit 1**：**`HAS_APP_ENVELOPE`**（`1` = `application_data` 含可选应用信封前缀，见 [app-envelope.md](./app-envelope.md)）。**bit 2–7**：保留；发送方 **MUST** 置 **`0`**；接收方 **MUST** 忽略未知位。 |
 | `payload_len` | 23 | 2 | `uint16` BE | **紧随其后的** 应用字节长度。 |
-| `application_data` | 25 | `payload_len` | 字节序列 | 应用载荷。 |
+| `application_data` | 25 | `payload_len` | 字节序列 | 总长 **`payload_len`**；语义分岔见 [app-envelope.md](./app-envelope.md)：**`HAS_APP_ENVELOPE=0`** 时 **@25 起整段** 均为应用 **`body`**（与 Phase 3 opaque 一致）；**`=1`** 时为 **`envelope_len`（uint16 BE）+ `envelope` + `body`**。 |
 
 ### `STREAM_CLOSE`（`msg_type = 0x12`）
 
@@ -64,7 +64,7 @@
 | `src_peer_id` | 2 |
 | `dst_peer_id` | 10 |
 | `stream_id` | 18 |
-| `STREAM_DATA`：`flags` | 22 |
+| `STREAM_DATA`：`flags`（bit0 `FIN`，bit1 `HAS_APP_ENVELOPE`，bit2–7 保留） | 22 |
 | `STREAM_DATA`：`payload_len` | 23 |
 | `STREAM_DATA`：`application_data` | 25 |
 | `STREAM_OPEN`：`metadata_len` | 22 |
