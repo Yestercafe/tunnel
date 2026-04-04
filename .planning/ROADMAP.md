@@ -61,7 +61,13 @@ Plans:
 2. Client 可凭 `session_id` 或邀请码 **SESSION_JOIN**，在 **SESSION_JOIN_ACK** 后获得非 0 的 **`peer_id`**。
 3. **JOIN_ACK 之后**，Client 可发送并接收带路由前缀的 **`STREAM_DATA`**；至少验证 **广播**与**单播**各一条可重复路径（`stream_id` 等策略已文档化）。
 
-**Plans**：TBD
+**Plans**：3 plans
+
+Plans:
+
+- [ ] `08-01-PLAN.md` — `internal/fakepeer` TLS harness（SESSION_CREATE/JOIN、STREAM_DATA 路由；非 relay 包名）
+- [ ] `08-02-PLAN.md` — `pkg/client`（Dial、CreateSession、JoinSession、STREAM_DATA、JoinGate、CLNT-01..03 测试 + `docs/client-stream-ids.md`）
+- [ ] `08-03-PLAN.md` — `cmd/tunnel`（`--addr`、`--insecure-skip-verify`、client 子命令冒烟）
 
 ### Phase 9: Relay 监听与 Session Registry（pkg/relay + cmd）
 
@@ -116,7 +122,7 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 7. 协议载荷层 | 2/2 | Planned | - |
-| 8. Client | 0/TBD | Not started | - |
+| 8. Client | 0/3 | Planned | - |
 | 9. Relay 监听与 Registry | 0/TBD | Not started | - |
 | 10. Relay 数据面路由 | 0/TBD | Not started | - |
 | 11. E2E 验证与负例 | 0/TBD | Not started | - |
