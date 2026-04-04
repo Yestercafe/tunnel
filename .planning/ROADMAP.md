@@ -19,7 +19,7 @@
 
 - [ ] **Phase 7: 协议载荷层（pkg/protocol）** — 控制面/数据面编解码与 JOIN 前数据面门禁（PROT-01、PROT-02）
 - [x] **Phase 8: Client（pkg/client + cmd）** — TCP+TLS、SESSION_CREATE/JOIN、JOIN 后 STREAM_DATA 广播与单播（CLNT-01..03） (completed 2026-04-04)
-- [ ] **Phase 9: Relay 监听与 Session Registry（pkg/relay + cmd）** — TCP+TLS、成帧循环、CREATE/JOIN 与 peer_id（RLY-01、RLY-02）
+- [x] **Phase 9: Relay 监听与 Session Registry（pkg/relay + cmd）** — TCP+TLS、成帧循环、CREATE/JOIN 与 peer_id（RLY-01、RLY-02） (completed 2026-04-04)
 - [ ] **Phase 10: Relay 数据面路由** — JOIN 后广播（不回送）与单播转发、非法路径行为可测（RLY-03）
 - [ ] **Phase 11: E2E 验证与负例** — 双 Client 同 session 自动化测试；JOIN 前数据面或非法路由门禁（E2E-01、E2E-02）
 
@@ -128,7 +128,7 @@ Plans:
 |-------|----------------|--------|-----------|
 | 7. 协议载荷层 | 2/2 | Planned | - |
 | 8. Client | 0/3 | Complete    | 2026-04-04 |
-| 9. Relay 监听与 Registry | 0/TBD | Not started | - |
+| 9. Relay 监听与 Registry | 2/2 | Complete   | 2026-04-04 |
 | 10. Relay 数据面路由 | 0/TBD | Not started | - |
 | 11. E2E 验证与负例 | 0/TBD | Not started | - |
 

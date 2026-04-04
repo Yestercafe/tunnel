@@ -60,8 +60,8 @@
 | CLNT-01     | 8     | Complete |
 | CLNT-02     | 8     | Complete |
 | CLNT-03     | 8     | Complete |
-| RLY-01      | 9     | Pending |
-| RLY-02      | 9     | Pending |
+| RLY-01      | 9     | Complete |
+| RLY-02      | 9     | Complete |
 | RLY-03      | 10    | Pending |
 | E2E-01      | 11    | Pending |
 | E2E-02      | 11    | Pending |
