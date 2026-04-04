@@ -10,6 +10,7 @@ import (
 
 	"github.com/google/uuid"
 
+	"tunnel/pkg/framing"
 	"tunnel/pkg/protocol"
 )
 
@@ -23,6 +24,8 @@ var (
 	ErrSessionNotFound = errors.New("relay: session not found")
 	// ErrJoinDenied is returned when JOIN credentials are invalid.
 	ErrJoinDenied = errors.New("relay: join denied")
+	// ErrDstPeerNotInSession is returned when unicast targets a missing peer_id.
+	ErrDstPeerNotInSession = errors.New("relay: dst peer not in session")
 )
 
 // Peer is a joined member of a session (RLY-03 will use this for routing).
@@ -89,7 +92,7 @@ func (r *SessionRegistry) CreateSession() (sessionID, inviteCode string, err err
 
 // JoinSession registers a new peer in the session identified by credential.
 // joinBy 0 = session_id, 1 = invite_code.
-func (r *SessionRegistry) JoinSession(joinBy uint8, credential string, w FrameWriter) (peerID uint64, err error) {
+func (r *SessionRegistry) JoinSession(joinBy uint8, credential string, w FrameWriter) (peerID uint64, sessionID string, err error) {
 	r.mu.Lock()
 	defer r.mu.Unlock()
 
@@ -100,19 +103,66 @@ func (r *SessionRegistry) JoinSession(joinBy uint8, credential string, w FrameWr
 	case 1:
 		sess = r.byInvite[credential]
 	default:
-		return 0, fmt.Errorf("%w: invalid join_by", ErrJoinDenied)
+		return 0, "", fmt.Errorf("%w: invalid join_by", ErrJoinDenied)
 	}
 	if sess == nil {
-		return 0, ErrSessionNotFound
+		return 0, "", ErrSessionNotFound
 	}
 
 	sess.nextPeerID++
 	peerID = sess.nextPeerID
 	if peerID == 0 {
-		return 0, errors.New("relay: peer_id overflow")
+		return 0, "", errors.New("relay: peer_id overflow")
 	}
 	sess.peers[peerID] = &Peer{ID: peerID, W: w}
-	return peerID, nil
+	return peerID, sess.id, nil
+}
+
+// DeliverStreamData forwards a full STREAM_DATA payload to peers in sessionID.
+// Broadcast sends to all peers except senderPeerID (no echo to sender).
+// Unicast sends only to dstPeerID when mode is RoutingModeUnicast.
+func (r *SessionRegistry) DeliverStreamData(sessionID string, senderPeerID uint64, mode uint8, dstPeerID uint64, payload []byte) error {
+	wire := framing.AppendFrame(framing.Frame{
+		Version:    framing.VersionV1,
+		Capability: 0,
+		Payload:    payload,
+	})
+
+	r.mu.Lock()
+	sess := r.byID[sessionID]
+	if sess == nil {
+		r.mu.Unlock()
+		return ErrSessionNotFound
+	}
+
+	var targets []*Peer
+	switch mode {
+	case protocol.RoutingModeBroadcast:
+		for id, p := range sess.peers {
+			if id == senderPeerID {
+				continue
+			}
+			targets = append(targets, p)
+		}
+	case protocol.RoutingModeUnicast:
+		p := sess.peers[dstPeerID]
+		if p == nil {
+			r.mu.Unlock()
+			return ErrDstPeerNotInSession
+		}
+		targets = []*Peer{p}
+	default:
+		r.mu.Unlock()
+		return fmt.Errorf("relay: unknown routing_mode %d", mode)
+	}
+	r.mu.Unlock()
+
+	for _, p := range targets {
+		if _, err := p.W.Write(wire); err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 func randomInviteCode() (string, error) {

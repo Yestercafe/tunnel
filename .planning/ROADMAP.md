@@ -103,7 +103,12 @@ Plans:
 2. Relay 对 **STREAM_DATA** 执行**单播**：按 `dst_peer_id` 查表投递。
 3. 对非法路由或尚未 JOIN 的连接，行为与 `errors.md` 及实现注释一致，且测试可断言（含 `PROTOCOL_ERROR`、丢弃或断连等选定策略）。
 
-**Plans**：TBD
+**Plans**：2 plans
+
+Plans:
+
+- [ ] `10-01-PLAN.md` — `JoinSession` 返回 sessionID、`DeliverStreamData`、`control.go` 解码与广播/单播（RLY-03）
+- [ ] `10-02-PLAN.md` — `relay_test` 广播/单播/负例（RLY-03）
 
 ### Phase 11: E2E 验证与负例
 

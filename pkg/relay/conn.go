@@ -8,10 +8,11 @@ import (
 	"tunnel/pkg/protocol"
 )
 
-// connState tracks per-connection session join state (RLY-02).
+// connState tracks per-connection session join state (RLY-02 / RLY-03).
 type connState struct {
-	joined bool
-	peerID uint64
+	joined    bool
+	peerID    uint64
+	sessionID string
 }
 
 func (s *Server) serveConn(conn *tls.Conn) {
