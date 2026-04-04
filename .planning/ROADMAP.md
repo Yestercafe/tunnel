@@ -40,7 +40,12 @@
 1. 工程师可对控制面/数据面 payload、`msg_type`、路由前缀及 **`PROTOCOL_ERROR`** 进行编解码，且与 v1 规范字段对齐；与 `pkg/framing` 边界清晰（帧级 vs 会话语义）。
 2. **JOIN_ACK 前**，共享判定逻辑将「带数据面路由」的帧视为非合法业务路径；Client/Relay 可一致实现或复用同一门禁 helper。
 
-**Plans**：TBD
+**Plans**：2 plans
+
+Plans:
+
+- [ ] `07-01-PLAN.md` — `pkg/protocol` 骨架、PROT-01 控制面/数据面编解码、`PROTOCOL_ERROR`、STREAM_* 视图与 golden
+- [ ] `07-02-PLAN.md` — PROT-02 `join_gate` 门禁、JoinGate 测试与包文档、全量 `go test ./...`
 
 ### Phase 8: Client（pkg/client + cmd）
 
@@ -110,7 +115,7 @@
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 7. 协议载荷层 | 0/TBD | Not started | - |
+| 7. 协议载荷层 | 0/2 | Not started | - |
 | 8. Client | 0/TBD | Not started | - |
 | 9. Relay 监听与 Registry | 0/TBD | Not started | - |
 | 10. Relay 数据面路由 | 0/TBD | Not started | - |
