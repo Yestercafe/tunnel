@@ -82,7 +82,12 @@ Plans:
 1. Relay **监听 TCP** 并以 **TLS** 终止连接；每条连接维护读缓冲与成帧循环（`ParseFrame` / `ErrNeedMore`），行为与 `pkg/framing` 一致。
 2. Relay 维护进程内 **Session Registry**（session ↔ peer ↔ 可写连接），正确处理 **SESSION_CREATE** / **SESSION_JOIN**，并分配 **`peer_id`**。
 
-**Plans**：TBD
+**Plans**：2 plans
+
+Plans:
+
+- [ ] `09-01-PLAN.md` — `pkg/relay`：TCP+TLS 监听、每连接读缓冲与 `ParseFrame`/`ErrNeedMore` 成帧循环、`cmd/tunnel relay`（RLY-01）
+- [ ] `09-02-PLAN.md` — Session Registry、SESSION_CREATE / SESSION_JOIN、`peer_id` 分配、`pkg/client` 集成测试（RLY-02）
 
 ### Phase 10: Relay 数据面路由
 
