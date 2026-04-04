@@ -57,9 +57,9 @@
 | ----------- | ----- | ------- |
 | PROT-01     | 7     | Pending |
 | PROT-02     | 7     | Pending |
-| CLNT-01     | 8     | Pending |
-| CLNT-02     | 8     | Pending |
-| CLNT-03     | 8     | Pending |
+| CLNT-01     | 8     | Complete |
+| CLNT-02     | 8     | Complete |
+| CLNT-03     | 8     | Complete |
 | RLY-01      | 9     | Pending |
 | RLY-02      | 9     | Pending |
 | RLY-03      | 10    | Pending |

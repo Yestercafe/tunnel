@@ -22,7 +22,7 @@
 ## Current State
 
 - **已交付里程碑：** **v1.0**（2026-04-04）— **v1 协议规范与一致性测试**（`docs/spec/v1/`、`pkg/framing`、`pkg/appenvelope`、`testdata/`、CI）。  
-- **进行中：** **v1.1** — Phase 7（`pkg/protocol`）已完成；继续 **Client / Relay / E2E** 阶段。  
+- **进行中：** **v1.1** — Phase 7–8 已完成（`pkg/protocol`、`pkg/client`、`cmd/tunnel` 冒烟）；继续 **Relay / E2E** 阶段。  
 - **代码规模**随本里程碑实现增长（v1.0 参考约 **477** 行 Go，仅供参考）。
 
 ## Requirements
@@ -38,11 +38,12 @@
 - ✓ **TLS 边缘终止与安全假设（v1 无 E2E）** — `security-assumptions.md`（SEC-01，Phase 5）
 - ✓ **一致性测试（TEST-01）**：`go test ./...`、CI、`testdata/` golden/负例 — Phase 6
 - ✓ **载荷语义层（PROT-01 / PROT-02）**：控制面/数据面 payload 视图、`PROTOCOL_ERROR` 与 `ErrCode`、`join_gate`（JOIN_ACK 前数据面门禁）— `pkg/protocol`（Phase 7）
+- ✓ **最小 Client（CLNT-01..03）**：`pkg/client` + `internal/fakepeer` 集成测试 + `docs/client-stream-ids.md`；`cmd/tunnel client` 冒烟 — Phase 8
 
 ### Active（v1.1 实现）
 
 - [ ] **RELAY-IMPL：** 最小 Relay：TCP 监听 + TLS，解析 v1 帧，维护 session ↔ peers，处理 SESSION_CREATE / JOIN 控制面
-- [ ] **CLIENT-IMPL：** 最小 Client：连接 Relay，完成开房或凭 `session_id`/邀请码加入，能收发**广播**与**单播**数据帧
+- [x] **CLIENT-IMPL：** 最小 Client：连接 Relay，完成开房或凭 `session_id`/邀请码加入，能收发**广播**与**单播**数据帧（Phase 8）
 - [ ] **E2E-DEMO：** 可重复验证（`go test` 和/或示例命令）：两 peer 同 session 内广播与单播路径可见
 
 ### Out of Scope
@@ -101,4 +102,4 @@
 
 ---
 
-*Last updated: 2026-04-04 — Phase 7（pkg/protocol）已完成*
+*Last updated: 2026-04-04 — Phase 8（pkg/client + cmd）已完成*
