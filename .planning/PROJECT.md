@@ -10,6 +10,20 @@
 
 在 **TLS 由边缘/服务器终止** 的前提下，用**同一套协议**同时支撑：**广播**、**私信（单播）**、**双向流**、**小消息与大块流**；并通过**可选应用信封**让 Web 前端、Copilot 管道等上层复用，而无需各自定义一套私有帧格式。
 
+## Current State
+
+- **已交付里程碑：** **v1.0**（2026-04-04）— **v1 协议规范与一致性测试**  
+- **产物：** `docs/spec/v1/` 协议文档、`pkg/framing` 与 `pkg/appenvelope` 参考实现、`testdata/` golden/负例、GitHub Actions 上 `go test ./...`；交付重心为**可互操作规范 + 测试锁定**，非完整生产级 Relay。  
+- **代码规模（参考）：** 约 **477** 行 Go（仓库内 `*.go` 合计），随下一里程碑实现会增长。
+
+## Next Milestone Goals
+
+由 **`/gsd-new-milestone`** 收集并排序，常见方向包括（择一或多）：
+
+- **参考实现：** 最小 Relay / client，跑通创建 session、加入、广播与单播  
+- **承载扩展：** REQUIREMENTS 中的 **TRANS-02（WebSocket 适配）** 等 v2 项  
+- **运维与部署：** 配置、健康检查、日志（若产品化）  
+
 ## Requirements
 
 ### Validated
@@ -28,7 +42,7 @@
 - [x] 会话语义：创建者创建 session；成员凭 `session_id`/邀请码加入；**同 session 内默认广播**（除发送者外均收到）；支持**私信/单播**至指定 peer — Phase 2–3 已规范会话成员与路由投递
 - [x] 传输语义：**双向流**；**按流（或逻辑通道）内有序**，**流之间允许乱序** — Phase 3 已写入 `streams-lifecycle.md`
 - [x] 分层：帧之上**可选应用信封**（如 content-type、请求 id、关联 id）— Phase 4 已写入 `app-envelope.md` 与 `streams-lifecycle.md`
-- [ ] 成员与连接：协议内会话与成员逻辑；可配合**短 token**；不将端到端加密作为 v1 必选项
+- [x] 成员与连接：协议内会话与成员逻辑；可配合**短 token**；不将端到端加密作为 v1 必选项 — v1.0 已文档化（会话/加入/凭证路径）
 - [x] **传输承载**：v1 规范以 **TLS 之上的字节流（典型为 TCP + TLS）** 为参考路径；**成帧、粘包与流边界**在规范中写清（不依赖 WebSocket）— Phase 1 已文档化
 
 ### Out of Scope
@@ -41,6 +55,7 @@
 
 - 典型路径：sender → 公网中继 → 同 session 内其它 peer；接收侧可将数据接入 Copilot 等再写回，依赖**应用信封**关联请求/响应。
 - **传输**：v1 对齐 **TCP + TLS** 上的连续字节流；逻辑帧通过**长度与解析规则**从字节流切分，与是否使用 WebSocket **解耦**。
+- **v1.0 后：** 规范与 golden 已锁定；下一里程碑可转向**可运行实现**或**v2 承载（如 WSS）**，见上文 Next Milestone Goals。
 
 ## Constraints
 
@@ -54,15 +69,15 @@
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| 协议先行（规范 + 一致性测试） | 降低后期互操作与实现返工 | — Pending |
-| 会话模型：创建者开房 + 邀请加入 | 简单可解释，适合固定小团队 | — Pending |
-| 默认广播 + 私信 | 兼顾协作广播与点对点控制/回复 | — Pending |
-| 流内有序、流间乱序 | 适配多路复用与浏览器/异步 IO | — Pending |
-| 可选应用信封 | 让 HTTP 风格与 Copilot 管道共享隧道 | v1：`app-envelope.md`（JSON）、`HAS_APP_ENVELOPE`；Phase 4 |
-| TLS 在边缘、协议内会话/成员 + 可选短 token | 与「公网中继」部署方式一致 | — Pending |
-| 帧头预留版本与 capability | 为未来扩展（传输、加密策略等）留余地 | — Pending |
-| Go 实现 | 静态编译、并发与网络生态成熟 | — Pending |
-| v1 承载为 TCP+TLS 字节流，不用 WebSocket | 简化成帧与一致性测试；与 WS message 边界解耦 | — Pending |
+| 协议先行（规范 + 一致性测试） | 降低后期互操作与实现返工 | ✓ v1.0：规范目录 + `testdata` + CI |
+| 会话模型：创建者开房 + 邀请加入 | 简单可解释，适合固定小团队 | ✓ v1.0：`session-create-join.md` 等 |
+| 默认广播 + 私信 | 兼顾协作广播与点对点控制/回复 | ✓ v1.0：`routing-modes.md` |
+| 流内有序、流间乱序 | 适配多路复用与浏览器/异步 IO | ✓ v1.0：`streams-lifecycle.md` |
+| 可选应用信封 | 让 HTTP 风格与 Copilot 管道共享隧道 | ✓ v1.0：`app-envelope.md`（JSON）、`HAS_APP_ENVELOPE`；Phase 4 |
+| TLS 在边缘、协议内会话/成员 + 可选短 token | 与「公网中继」部署方式一致 | ✓ v1.0：`join-credentials.md`、`security-assumptions.md` |
+| 帧头预留版本与 capability | 为未来扩展（传输、加密策略等）留余地 | ✓ v1.0：帧头与 capability 语义成文 |
+| Go 实现 | 静态编译、并发与网络生态成熟 | ✓ v1.0：`pkg/framing`、`pkg/appenvelope`、测试 |
+| v1 承载为 TCP+TLS 字节流，不用 WebSocket | 简化成帧与一致性测试；与 WS message 边界解耦 | ✓ v1.0：TRANS-01 与成帧文档 |
 
 ## Evolution
 
@@ -85,4 +100,4 @@
 
 ---
 
-*Last updated: 2026-03-29 — Phase 6（一致性测试套件）已完成*
+*Last updated: 2026-04-04 — v1.0 里程碑已归档（规范 + 一致性测试）*
