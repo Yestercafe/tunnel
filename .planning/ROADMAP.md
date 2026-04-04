@@ -115,7 +115,7 @@ Plans:
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 7. 协议载荷层 | 0/2 | Not started | - |
+| 7. 协议载荷层 | 2/2 | Planned | - |
 | 8. Client | 0/TBD | Not started | - |
 | 9. Relay 监听与 Registry | 0/TBD | Not started | - |
 | 10. Relay 数据面路由 | 0/TBD | Not started | - |
