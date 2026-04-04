@@ -1,0 +1,3 @@
+# STREAM_DATA minimal payload (no 10-byte frame header): BROADCAST, src=0xab, stream_id=1, flags=0, inner payload_len=0
+# See docs/spec/v1/streams-lifecycle.md STREAM_DATA + docs/spec/v1/routing-modes.md ROUTE-01
+110100000000000000ab000000000000000000000001000000

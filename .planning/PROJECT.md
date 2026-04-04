@@ -22,7 +22,7 @@
 ## Current State
 
 - **已交付里程碑：** **v1.0**（2026-04-04）— **v1 协议规范与一致性测试**（`docs/spec/v1/`、`pkg/framing`、`pkg/appenvelope`、`testdata/`、CI）。  
-- **进行中：** **v1.1** — 最小 Relay + client，跑通创建 session、加入、广播与单播。  
+- **进行中：** **v1.1** — Phase 7（`pkg/protocol`）已完成；继续 **Client / Relay / E2E** 阶段。  
 - **代码规模**随本里程碑实现增长（v1.0 参考约 **477** 行 Go，仅供参考）。
 
 ## Requirements
@@ -37,6 +37,7 @@
 - ✓ **错误码目录与 `PROTOCOL_ERROR`（`0x05`）** — `errors.md`、`pkg/framing` ErrCode（ERR-01，Phase 5）
 - ✓ **TLS 边缘终止与安全假设（v1 无 E2E）** — `security-assumptions.md`（SEC-01，Phase 5）
 - ✓ **一致性测试（TEST-01）**：`go test ./...`、CI、`testdata/` golden/负例 — Phase 6
+- ✓ **载荷语义层（PROT-01 / PROT-02）**：控制面/数据面 payload 视图、`PROTOCOL_ERROR` 与 `ErrCode`、`join_gate`（JOIN_ACK 前数据面门禁）— `pkg/protocol`（Phase 7）
 
 ### Active（v1.1 实现）
 
@@ -100,4 +101,4 @@
 
 ---
 
-*Last updated: 2026-04-04 — 新里程碑 v1.1（最小 Relay 与 Client）已立项*
+*Last updated: 2026-04-04 — Phase 7（pkg/protocol）已完成*
