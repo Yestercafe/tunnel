@@ -1,17 +1,17 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.0
-milestone_name: milestone
-status: v1.0 milestone complete
-stopped_at: Phase 6 context gathered
-last_updated: "2026-04-04T13:08:19.741Z"
+milestone: v1.1
+milestone_name: minimal-relay-client
+status: Defining requirements
+stopped_at: Milestone v1.1 started
+last_updated: "2026-04-04T00:00:00.000Z"
 last_activity: 2026-04-04
 progress:
-  total_phases: 6
-  completed_phases: 6
-  total_plans: 16
-  completed_plans: 16
-  percent: 100
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # Project State
@@ -20,23 +20,23 @@ progress:
 
 See: .planning/PROJECT.md (updated 2026-04-04)
 
-**Core value:** 在 TLS 由边缘/服务器终止的前提下，用同一套协议同时支撑广播、私信、双向流、大小载荷与可选应用信封；上层（含 Web、Copilot 管道等）通过**应用信封**复用。  
-**Current focus:** v1.0 已归档 — 规划下一里程碑（`/gsd-new-milestone`）
+**Core value:** 在 TLS 由边缘/服务器终止的前提下，用同一套协议同时支撑广播、私信、双向流、大小载荷与可选应用信封；上层通过**应用信封**复用。  
+**Current focus:** v1.1 — 最小 Relay 与 Client（创建 session、加入、广播、单播）
 
 ## Current Position
 
-Phase: 6（已完成）
+Phase: Not started（defining requirements）
 Plan: —
-Status: v1.0 已归档 — 待定义下一里程碑
-Last activity: 2026-04-04
+Status: Defining requirements
+Last activity: 2026-04-04 — Milestone v1.1 started
 
-Progress: [██████████] 100%
+Progress: [░░░░░░░░░░] 0%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 11  
+- Total plans completed: 0  
 - Average duration: —  
 - Total execution time: —  
 
@@ -44,10 +44,7 @@ Progress: [██████████] 100%
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 1 tls | 3 | 3 | — |
-| 2 session | 3 | 3 | — |
-| 3 routing-streams | 3 | 3 | — |
-| 4 optional-app-envelope | 2 | 2 | — |
+| — | — | — | — |
 
 **Recent Trend:**
 
@@ -75,6 +72,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-29T08:48:41.796Z
-Stopped at: Phase 6 context gathered
-Resume file: .planning/phases/06-consistency-test-suite/06-CONTEXT.md
+Last session: —
+Stopped at: Milestone v1.1 — requirements
+Resume file: —

@@ -2,7 +2,7 @@
 
 ## What This Is
 
-面向公网部署的**中继隧道**：多个 **client** 通过同一服务在同一 **session** 内交换数据。创建者**开房**并获得 `session_id`（或邀请码），其它 **peer** 凭此加入。协议优先：先交付**帧格式、状态机、错误码**与**一致性测试**；实现语言为 **Go**，但第一步不强制完成端到端产品实现。
+面向公网部署的**中继隧道**：多个 **client** 通过同一服务在同一 **session** 内交换数据。创建者**开房**并获得 `session_id`（或邀请码），其它 **peer** 凭此加入。实现语言为 **Go**；**v1.0** 已交付规范与一致性测试，**当前里程碑**聚焦**最小可运行** Relay 与 client（非完整生产级部署）。
 
 **面向谁：**需要在公网与内网之间、**进程/服务**之间安全转发数据的开发者与小团队（**少量固定 peer**）。v1 **不以 WebSocket 为承载**；浏览器若需接入，留待 **v2+**（例如 WebSocket 适配层或 WebTransport），见 REQUIREMENTS。
 
@@ -10,19 +10,20 @@
 
 在 **TLS 由边缘/服务器终止** 的前提下，用**同一套协议**同时支撑：**广播**、**私信（单播）**、**双向流**、**小消息与大块流**；并通过**可选应用信封**让 Web 前端、Copilot 管道等上层复用，而无需各自定义一套私有帧格式。
 
+## Current Milestone: v1.1 最小 Relay 与 Client
+
+**Goal：** 交付与现有 **v1 规范**一致的 **Go 最小 Relay** 与 **Client**，在 **TCP+TLS** 字节流上跑通 **创建 session、加入、同 session 内广播与单播**（可演示/可测试的最小闭环）。
+
+**Target features：**
+- **最小 Relay：** 接受 TLS 连接，维护 session 与成员，完成控制面与数据面路由（广播/单播）
+- **最小 Client：** 连接 Relay，完成会话创建或加入，并能发送/接收广播与单播数据
+- **验证路径：** 自动化测试和/或简单 CLI，可重复证明上述路径成立
+
 ## Current State
 
-- **已交付里程碑：** **v1.0**（2026-04-04）— **v1 协议规范与一致性测试**  
-- **产物：** `docs/spec/v1/` 协议文档、`pkg/framing` 与 `pkg/appenvelope` 参考实现、`testdata/` golden/负例、GitHub Actions 上 `go test ./...`；交付重心为**可互操作规范 + 测试锁定**，非完整生产级 Relay。  
-- **代码规模（参考）：** 约 **477** 行 Go（仓库内 `*.go` 合计），随下一里程碑实现会增长。
-
-## Next Milestone Goals
-
-由 **`/gsd-new-milestone`** 收集并排序，常见方向包括（择一或多）：
-
-- **参考实现：** 最小 Relay / client，跑通创建 session、加入、广播与单播  
-- **承载扩展：** REQUIREMENTS 中的 **TRANS-02（WebSocket 适配）** 等 v2 项  
-- **运维与部署：** 配置、健康检查、日志（若产品化）  
+- **已交付里程碑：** **v1.0**（2026-04-04）— **v1 协议规范与一致性测试**（`docs/spec/v1/`、`pkg/framing`、`pkg/appenvelope`、`testdata/`、CI）。  
+- **进行中：** **v1.1** — 最小 Relay + client，跑通创建 session、加入、广播与单播。  
+- **代码规模**随本里程碑实现增长（v1.0 参考约 **477** 行 Go，仅供参考）。
 
 ## Requirements
 
@@ -37,17 +38,16 @@
 - ✓ **TLS 边缘终止与安全假设（v1 无 E2E）** — `security-assumptions.md`（SEC-01，Phase 5）
 - ✓ **一致性测试（TEST-01）**：`go test ./...`、CI、`testdata/` golden/负例 — Phase 6
 
-### Active
+### Active（v1.1 实现）
 
-- [x] 会话语义：创建者创建 session；成员凭 `session_id`/邀请码加入；**同 session 内默认广播**（除发送者外均收到）；支持**私信/单播**至指定 peer — Phase 2–3 已规范会话成员与路由投递
-- [x] 传输语义：**双向流**；**按流（或逻辑通道）内有序**，**流之间允许乱序** — Phase 3 已写入 `streams-lifecycle.md`
-- [x] 分层：帧之上**可选应用信封**（如 content-type、请求 id、关联 id）— Phase 4 已写入 `app-envelope.md` 与 `streams-lifecycle.md`
-- [x] 成员与连接：协议内会话与成员逻辑；可配合**短 token**；不将端到端加密作为 v1 必选项 — v1.0 已文档化（会话/加入/凭证路径）
-- [x] **传输承载**：v1 规范以 **TLS 之上的字节流（典型为 TCP + TLS）** 为参考路径；**成帧、粘包与流边界**在规范中写清（不依赖 WebSocket）— Phase 1 已文档化
+- [ ] **RELAY-IMPL：** 最小 Relay：TCP 监听 + TLS，解析 v1 帧，维护 session ↔ peers，处理 SESSION_CREATE / JOIN 控制面
+- [ ] **CLIENT-IMPL：** 最小 Client：连接 Relay，完成开房或凭 `session_id`/邀请码加入，能收发**广播**与**单播**数据帧
+- [ ] **E2E-DEMO：** 可重复验证（`go test` 和/或示例命令）：两 peer 同 session 内广播与单播路径可见
 
 ### Out of Scope
 
-- **v1 不要求**：完整生产级服务端/客户端实现（可在规范稳定后再做）
+- **v1.1 仍不要求**：完整生产级 Relay（集群、持久化、观测栈、配额与滥用防护等）
+- **v1 规范阶段已说明**：完整生产级服务端/客户端曾列为非 v1 必选项；v1.1 仅交付**最小**可运行实现
 - **v1 不要求**：端到端加密（可后续阶段设计；当前信任模型为 TLS 在边缘/服务器）
 - **未承诺**：大规模集群、万级并发 session（当前假设少量固定 peer）
 
@@ -55,7 +55,7 @@
 
 - 典型路径：sender → 公网中继 → 同 session 内其它 peer；接收侧可将数据接入 Copilot 等再写回，依赖**应用信封**关联请求/响应。
 - **传输**：v1 对齐 **TCP + TLS** 上的连续字节流；逻辑帧通过**长度与解析规则**从字节流切分，与是否使用 WebSocket **解耦**。
-- **v1.0 后：** 规范与 golden 已锁定；下一里程碑可转向**可运行实现**或**v2 承载（如 WSS）**，见上文 Next Milestone Goals。
+- **v1.1：** 在已锁定规范上实现**最小 Relay + client**；浏览器侧与 WebSocket 承载仍属后续（见 REQUIREMENTS / 路线图）。
 
 ## Constraints
 
@@ -100,4 +100,4 @@
 
 ---
 
-*Last updated: 2026-04-04 — v1.0 里程碑已归档（规范 + 一致性测试）*
+*Last updated: 2026-04-04 — 新里程碑 v1.1（最小 Relay 与 Client）已立项*
