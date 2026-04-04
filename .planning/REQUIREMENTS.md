@@ -52,22 +52,22 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| PROT-01 | — | Pending |
-| PROT-02 | — | Pending |
-| CLNT-01 | — | Pending |
-| CLNT-02 | — | Pending |
-| CLNT-03 | — | Pending |
-| RLY-01 | — | Pending |
-| RLY-02 | — | Pending |
-| RLY-03 | — | Pending |
-| E2E-01 | — | Pending |
-| E2E-02 | — | Pending |
+| PROT-01 | 7 | Pending |
+| PROT-02 | 7 | Pending |
+| CLNT-01 | 8 | Pending |
+| CLNT-02 | 8 | Pending |
+| CLNT-03 | 8 | Pending |
+| RLY-01 | 9 | Pending |
+| RLY-02 | 9 | Pending |
+| RLY-03 | 10 | Pending |
+| E2E-01 | 11 | Pending |
+| E2E-02 | 11 | Pending |
 
 **Coverage:**
 
 - v1.1 requirements: 10 total  
-- Mapped to phases: 0（待路线图）  
-- Unmapped: 10 ⚠️  
+- Mapped to phases: 10 ✓  
+- Unmapped: 0  
 
 ---
 
