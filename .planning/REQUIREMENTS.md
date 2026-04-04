@@ -62,7 +62,7 @@
 | CLNT-03     | 8     | Complete |
 | RLY-01      | 9     | Complete |
 | RLY-02      | 9     | Complete |
-| RLY-03      | 10    | Pending |
+| RLY-03      | 10    | Complete |
 | E2E-01      | 11    | Pending |
 | E2E-02      | 11    | Pending |
 
