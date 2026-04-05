@@ -4,9 +4,11 @@
 **Domain:** Go 集成/E2E 测试（`testing`、进程内 Relay、`crypto/tls`、v1 成帧）  
 **Confidence:** HIGH（结论主要来自仓库内现有测试与实现代码）
 
-## User Constraints（本阶段无独立 CONTEXT.md）
+<user_constraints>
 
-本阶段目录下不存在 `*-CONTEXT.md`。以下约束来自 `.planning/REQUIREMENTS.md`、`.planning/ROADMAP.md` 与 `.cursor/rules/gsd-project.md`，规划阶段须遵守。
+## User Constraints（无 discuss 阶段 CONTEXT.md）
+
+本阶段目录下不存在 `*-CONTEXT.md`，故无「Decisions / Claude's Discretion / Deferred Ideas」逐字拷贝。以下约束来自 `.planning/REQUIREMENTS.md`、`.planning/ROADMAP.md` Phase 11 与 `.cursor/rules/gsd-project.md`，**规划阶段须遵守**。
 
 ### 来自 REQUIREMENTS / Roadmap（锁定范围）
 
@@ -19,6 +21,8 @@
 
 - 实现默认 **Go**；传输为 **TLS 上的自定义成帧**。
 - 测试运行以 **`go test`** 为主（与 `research/STACK.md` / CI 一致）。
+
+</user_constraints>
 
 <phase_requirements>
 
@@ -72,7 +76,7 @@
 | 方案 | 说明 | Tradeoff |
 |------|------|----------|
 | 进程内 `relay.Server`（当前） | `ListenAddr: "127.0.0.1:0"`，`Serve(ctx)` 于 goroutine | 快速、无二进制依赖、CI 友好 |
-| 子进程 `cmd/tunnel relay` | 黑盒测 CLI + 真实进程 | 更慢、需证书文件或额外脚本；`cmd/tunnel/relay.go` 未显式设置 `Registry`，但 `Listen()` 会为 `nil` Registry 调用 `NewSessionRegistry()`（`pkg/relay/server.go`），行为可用 |
+| 子进程 `cmd/tunnel relay` | 黑盒测 CLI + 真实进程 | 更慢、需 PEM 证书路径（`--cert`/`--key`）；`runRelay` 未设置 `Registry`，`Listen()` 在 `Registry == nil` 时注入 `NewSessionRegistry()`（见 `pkg/relay/server.go`），与进程内测试等价 |
 
 **Installation：** 仅 Go 工具链；依赖模块首次构建需网络（如 `github.com/google/uuid`）。
 
@@ -115,6 +119,20 @@ internal/fakepeer/        # LocalhostTLSConfig、Harness（非生产 Relay）
 
 - **仅用 `client.SendStreamData` 测「JOIN 前数据面」：** `pkg/client/client.go` 在发送路径调用 `JoinGateAllowsBusinessDataPlane`，未 JOIN 时直接 **`return ErrNotJoined`**，帧**不会**到达 Relay，无法验证服务端 `PROTOCOL_ERROR` 路径。负例须 **`writeFrame` 级**发送或共享测试辅助函数。  
 - **混淆 fakepeer 与 Relay：** `internal/fakepeer/harness.go` 对 JOIN 前数据面返回的 `EncodeProtocolError` 与 `pkg/relay/control.go` 的 **err_code/reason 字符串** 可能不一致；E2E-02 若要求「真实 Relay」，应以 **`relay.Server`** 为准。
+
+## Runtime State Inventory
+
+> 本阶段为**验证/测试组织**与可选新增 `_test.go`，**非**重命名、数据迁移或运行时配置变更。
+
+| Category | Items Found | Action Required |
+|----------|-------------|-----------------|
+| Stored data | 无（测试不写 DB/无持久化 session） | — |
+| Live service config | 无 | — |
+| OS-registered state | 无 | — |
+| Secrets/env vars | 无新增密钥需求；测试仅用 `fakepeer` 内存证书 | — |
+| Build artifacts | 无；`go test` 不产生需清理的安装态 | — |
+
+**结论：** Phase 11 交付不涉及仓库外运行时状态同步；若未来增加「子进程 + 临时 PEM 文件」脚本，仅需在测试中 `t.TempDir()` 内生成并删除。
 
 ## Don't Hand-Roll
 
@@ -179,6 +197,12 @@ func TestRelay_StreamData_UnicastMissingDst(t *testing.T) {
 }
 ```
 
+### JOIN 前数据面（待补；须绕过 `Client.SendStreamData`）
+
+思路：在 `relay_test` 中 `Dial` 后仅 `CreateSession`，**不**调用 `JoinSession`；使用与 `pkg/client` 相同的成帧方式写出 **一帧** `STREAM_DATA`（`protocol.EncodeStreamData` + `framing.AppendFrame`）。因 `Client` 未导出底层 `writeFrame`，可复制 `client.writeFrame` 逻辑到测试辅助函数，或使用 `tls.Dial` + 手写 `Write`。随后用 `protocol.DecodeProtocolError` 读回一帧，期望 `MsgTypeProtocolError` 且 `err_code == framing.ErrCodeRoutingInvalid`（与 `pkg/relay/control.go` 一致）。
+
+**勿用 `internal/fakepeer` 断言 Relay 的 err_code：** fakepeer 在 JOIN 前 `STREAM_DATA` 上返回 `ErrCodeJoinDenied`（见 `internal/fakepeer/harness.go` `MsgTypeStreamData` 分支），与生产 Relay 的 `ErrCodeRoutingInvalid` **不一致**；E2E-02 若以真实 Relay 为准，必须在 `relay.Server` 上测。
+
 ## State of the Art
 
 | 旧认知 | 当前仓库事实 | 说明 |
@@ -233,7 +257,8 @@ func TestRelay_StreamData_UnicastMissingDst(t *testing.T) {
 ### Sampling Rate（建议）
 
 - **Per task / wave merge：** `go test ./... -count=1`  
-- **Phase gate：** 全绿后进入 `/gsd-verify-work`；CI 与本地命令对齐。
+- **Phase gate：** 全绿后进入 `/gsd-verify-work`；CI 与本地命令对齐（`.github/workflows/go.yml`）。
+- **可选加强：** `go test ./... -race -count=1`（若新增并发相关逻辑；当前集成测试以同步顺序为主）。
 
 ### Wave 0 Gaps
 
