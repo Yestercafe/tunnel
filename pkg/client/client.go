@@ -223,5 +223,13 @@ func (c *Client) ReadFrame(ctx context.Context) (framing.Frame, error) {
 	return c.readFrame(ctx)
 }
 
+// UnderlyingTLSConn returns the established TLS connection. Intended for integration tests that must send frames not exposed by the public API (e.g. STREAM_DATA before JOIN per Phase 11).
+func (c *Client) UnderlyingTLSConn() *tls.Conn {
+	if c == nil {
+		return nil
+	}
+	return c.conn
+}
+
 // PeerID returns the local peer id after a successful JoinSession.
 func (c *Client) PeerID() uint64 { return c.peerID }
