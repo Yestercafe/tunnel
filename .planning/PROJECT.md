@@ -22,7 +22,7 @@
 ## Current State
 
 - **已交付里程碑：** **v1.0**（2026-04-04）— **v1 协议规范与一致性测试**（`docs/spec/v1/`、`pkg/framing`、`pkg/appenvelope`、`testdata/`、CI）。  
-- **进行中：** **v1.1** — Phase 7–10 已完成；继续 **E2E（Phase 11）**。  
+- **进行中：** **v1.1** — Phase 7–10 已完成；**E2E（Phase 11）** 已通过 `pkg/relay/relay_test.go` 自动化覆盖。  
 - **代码规模**随本里程碑实现增长（v1.0 参考约 **477** 行 Go，仅供参考）。
 
 ## Requirements
@@ -46,7 +46,7 @@
 
 - [x] **RELAY-IMPL（控制面 + 数据面）：** 最小 Relay：TCP+TLS、CREATE/JOIN、**STREAM_DATA** 广播/单播路由 — Phase 9–10
 - [x] **CLIENT-IMPL：** 最小 Client：连接 Relay，完成开房或凭 `session_id`/邀请码加入，能收发**广播**与**单播**数据帧（Phase 8）
-- [ ] **E2E-DEMO：** 可重复验证（`go test` 和/或示例命令）：两 peer 同 session 内广播与单播路径可见
+- [x] **E2E-DEMO：** 可重复验证（`go test`）：两 peer 同 session 内广播与单播路径可见 — Phase 11：`pkg/relay/relay_test.go`
 
 ### Out of Scope
 
@@ -104,4 +104,4 @@
 
 ---
 
-*Last updated: 2026-04-04 — Phase 10（pkg/relay STREAM_DATA 路由）已完成*
+*Last updated: 2026-04-14 — Phase 11 E2E（`pkg/relay/relay_test.go`）*

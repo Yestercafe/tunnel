@@ -1,10 +1,11 @@
 ---
 phase: 11
 slug: e2e
-status: draft
-nyquist_compliant: false
-wave_0_complete: false
+status: complete
+nyquist_compliant: true
+wave_0_complete: true
 created: 2026-04-05
+updated: 2026-04-14
 ---
 
 # Phase 11 — Validation Strategy
@@ -38,10 +39,10 @@ created: 2026-04-05
 
 | Task ID | Plan | Wave | Requirement | Test Type | Automated Command | File Exists | Status |
 |---------|------|------|---------------|-----------|-------------------|-------------|--------|
-| 11-01-01 | 01 | 2 | E2E-01 | 集成 | `go test ./pkg/relay/... -run TestRelay_StreamData_Broadcast -count=1` | ✅ | ⬜ pending |
-| 11-01-02 | 01 | 2 | E2E-01 | 集成 | `go test ./pkg/relay/... -run TestRelay_StreamData_Unicast -count=1` | ✅ | ⬜ pending |
-| 11-01-03 | 01 | 2 | E2E-02 | 集成 | `go test ./pkg/relay/... -run TestRelay_StreamData_UnicastMissingDst -count=1` | ✅ | ⬜ pending |
-| 11-02-01 | 02 | 1 | E2E-02 | 集成 | `go test ./pkg/relay/... -run TestRelay_StreamData_BeforeJoinAck -count=1` | ❌ W0 | ⬜ pending |
+| 11-01-01 | 01 | 2 | E2E-01 | 集成 | `go test ./pkg/relay/... -run TestRelay_StreamData_Broadcast -count=1` | ✅ | ✅ green |
+| 11-01-02 | 01 | 2 | E2E-01 | 集成 | `go test ./pkg/relay/... -run TestRelay_StreamData_Unicast -count=1` | ✅ | ✅ green |
+| 11-01-03 | 01 | 2 | E2E-02 | 集成 | `go test ./pkg/relay/... -run TestRelay_StreamData_UnicastMissingDst -count=1` | ✅ | ✅ green |
+| 11-02-01 | 02 | 1 | E2E-02 | 集成 | `go test ./pkg/relay/... -run TestRelay_StreamData_BeforeJoinAck -count=1` | ✅ | ✅ green |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 
@@ -49,8 +50,8 @@ created: 2026-04-05
 
 ## Wave 0 Requirements
 
-- [ ] 新增 `pkg/relay`（或约定路径）中 **JOIN_ACK 前**发送 `STREAM_DATA` 的集成测试，经 TLS 写到 **真实 `relay.Server`**，断言 `PROTOCOL_ERROR` / `ErrCodeRoutingInvalid`（与 `control.go` 一致）。
-- [ ] `REQUIREMENTS.md` Traceability 或 Phase 11 `VERIFICATION.md` 中将 E2E-01 / E2E-02 与测试函数名显式对齐。
+- [x] 新增 `pkg/relay`（或约定路径）中 **JOIN_ACK 前**发送 `STREAM_DATA` 的集成测试，经 TLS 写到 **真实 `relay.Server`**，断言 `PROTOCOL_ERROR` / `ErrCodeRoutingInvalid`（与 `control.go` 一致）。
+- [x] `REQUIREMENTS.md` Traceability 或 Phase 11 `VERIFICATION.md` 中将 E2E-01 / E2E-02 与测试函数名显式对齐。
 
 *已有基础设施：`fakepeer.LocalhostTLSConfig`、`relay_test` 双 Client 模式。*
 
@@ -68,11 +69,11 @@ created: 2026-04-05
 
 ## Validation Sign-Off
 
-- [ ] All tasks have `<automated>` verify or Wave 0 dependencies
-- [ ] Sampling continuity: no 3 consecutive tasks without automated verify
-- [ ] Wave 0 covers all MISSING references
-- [ ] No watch-mode flags
-- [ ] Feedback latency < 180s
-- [ ] `nyquist_compliant: true` set in frontmatter
+- [x] All tasks have `<automated>` verify or Wave 0 dependencies
+- [x] Sampling continuity: no 3 consecutive tasks without automated verify
+- [x] Wave 0 covers all MISSING references
+- [x] No watch-mode flags
+- [x] Feedback latency < 180s
+- [x] `nyquist_compliant: true` set in frontmatter
 
-**Approval:** pending
+**Approval:** complete (2026-04-14)

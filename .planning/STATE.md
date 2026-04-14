@@ -4,12 +4,12 @@ milestone: v1.1
 milestone_name: — 最小 Relay 与 Client
 status: executing
 stopped_at: Phase 8 context gathered
-last_updated: "2026-04-04T17:12:22.073Z"
-last_activity: 2026-04-04
+last_updated: "2026-04-14T02:17:40.468Z"
+last_activity: 2026-04-14 -- Phase 11 execution started
 progress:
   total_phases: 5
   completed_phases: 4
-  total_plans: 9
+  total_plans: 11
   completed_plans: 9
   percent: 0
 ---
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-04)
 
 **Core value:** 在 TLS 由边缘/服务器终止的前提下，用同一套协议同时支撑广播、私信、双向流、大小载荷与可选应用信封；上层通过**应用信封**复用。  
-**Current focus:** Phase 9 — Relay 监听与 Session Registry
+**Current focus:** Phase 11 — e2e
 
 ## Current Position
 
-Phase: 11
-Plan: Not started
-Status: Executing Phase 9
-Last activity: 2026-04-04
+Phase: 11 (e2e) — EXECUTING
+Plan: 1 of 2
+Status: Executing Phase 11
+Last activity: 2026-04-14 -- Phase 11 execution started
 
 Progress: [░░░░░░░░░░] 0%（v1.1 尚未开始执行；v1.0 阶段 1–6 已归档完成）
 

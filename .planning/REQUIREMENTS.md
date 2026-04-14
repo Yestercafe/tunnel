@@ -63,8 +63,8 @@
 | RLY-01      | 9     | Complete |
 | RLY-02      | 9     | Complete |
 | RLY-03      | 10    | Complete |
-| E2E-01      | 11    | Pending |
-| E2E-02      | 11    | Pending |
+| E2E-01      | 11    | Complete |
+| E2E-02      | 11    | Complete |
 
 
 **Coverage:**
@@ -73,7 +73,9 @@
 - Mapped to phases: 10 ✓  
 - Unmapped: 0
 
+- **E2E traceability（Phase 11）：** `TestRelay_StreamData_Broadcast` / `TestRelay_StreamData_Unicast` → **E2E-01**；`TestRelay_StreamData_UnicastMissingDst` / `TestRelay_StreamData_BeforeJoinAck` → **E2E-02**。
+
 ---
 
 *Requirements defined: 2026-04-04*  
-*Last updated: 2026-04-04 — milestone v1.1 new-milestone*
+*Last updated: 2026-04-14 — Phase 11 E2E traceability*
