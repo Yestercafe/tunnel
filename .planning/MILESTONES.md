@@ -1,5 +1,25 @@
 # Milestones
 
+## v1.1 最小 Relay 与 Client (Shipped: 2026-04-14)
+
+**Phases completed:** 5 phases, 11 plans, 24 tasks
+
+**Key accomplishments:**
+
+- 交付 `pkg/protocol` PROT-01
+- 实现 PROT-02 `join_gate`
+- Minimal TLS + v1 framing fake (`internal/fakepeer`) enables `pkg/client` integration tests without Docker or production Relay.
+- `pkg/client` delivers CLNT-01..03 with `go test` against `internal/fakepeer`, plus stream_id documentation.
+- `cmd/tunnel` exposes `client create` and `client join` for manual/script smoke against a relay or fake.
+- Delivered `pkg/relay` TLS TCP listener, per-connection framing loop with PROTOCOL_ERROR on frame errors, and `tunnel relay --listen --cert --key`.
+- Delivered process-local Session Registry, SESSION_CREATE / SESSION_JOIN handling with non-zero peer_id, JOIN 前 STREAM_DATA 拒绝，以及 `pkg/client` 对真实 Relay 的集成测试。
+- Extended `JoinSession` with `sessionID`, added `DeliverStreamData` (broadcast excludes sender; unicast by `dst_peer_id`), and replaced the Phase 9 STREAM_DATA placeholder with `DecodeStreamData` + `ValidateRoutingIntent` routing.
+- Added `TestRelay_StreamData_Broadcast`, `TestRelay_StreamData_Unicast`, and `TestRelay_StreamData_UnicastMissingDst` (unicast to absent peer → `PROTOCOL_ERROR` `ERR_ROUTING_INVALID`).
+- 将 E2E-01/E2E-02 与已运行的 `go test` 路径、路线图与验证表对齐，完成可追溯性交付。
+- 在真实 `relay.Server` 上补齐 JOIN_ACK 前 `STREAM_DATA` 负例，与 `control.go` 门禁一致（`ErrCodeRoutingInvalid`）。
+
+---
+
 ## v1.0 v1 协议规范与一致性测试 (Shipped: 2026-04-04)
 
 **Delivered:** v1 二进制协议规范（帧、会话、路由/流、应用信封、状态机/错误/安全假设）与 Go 一致性测试 + `testdata` golden，CI 可重复运行 `go test ./...`。
