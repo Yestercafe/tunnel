@@ -75,6 +75,7 @@ func TestRelay_ClientCreateJoin(t *testing.T) {
 	}
 }
 
+// E2E-01: two clients, same session, broadcast
 func TestRelay_StreamData_Broadcast(t *testing.T) {
 	srvCfg, pool := fakepeer.LocalhostTLSConfig(t)
 	srv := &relay.Server{
@@ -142,6 +143,7 @@ func TestRelay_StreamData_Broadcast(t *testing.T) {
 	}
 }
 
+// E2E-01: two clients, same session, unicast
 func TestRelay_StreamData_Unicast(t *testing.T) {
 	srvCfg, pool := fakepeer.LocalhostTLSConfig(t)
 	srv := &relay.Server{
@@ -210,6 +212,82 @@ func TestRelay_StreamData_Unicast(t *testing.T) {
 	}
 }
 
+// E2E-02: STREAM_DATA before JOIN_ACK → PROTOCOL_ERROR (ErrCodeRoutingInvalid)
+func TestRelay_StreamData_BeforeJoinAck(t *testing.T) {
+	srvCfg, pool := fakepeer.LocalhostTLSConfig(t)
+	srv := &relay.Server{
+		ListenAddr: "127.0.0.1:0",
+		TLSConfig:  srvCfg,
+		Registry:   relay.NewSessionRegistry(),
+	}
+	if err := srv.Listen(); err != nil {
+		t.Fatal(err)
+	}
+	addr := srv.Addr().String()
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+	go func() { _ = srv.Serve(ctx) }()
+	defer srv.Close()
+
+	tlsClient := &tls.Config{
+		RootCAs:    pool,
+		ServerName: "localhost",
+		MinVersion: tls.VersionTLS12,
+	}
+
+	c1, err := client.Dial(context.Background(), addr, tlsClient)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer c1.Close()
+
+	if _, _, err := c1.CreateSession(context.Background()); err != nil {
+		t.Fatal(err)
+	}
+
+	payload, err := protocol.EncodeStreamData(protocol.RoutingPrefix{
+		RoutingMode: protocol.RoutingModeBroadcast,
+		SrcPeerID:   0,
+		DstPeerID:   0,
+	}, 1, 0, []byte("prejoin"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	wire := framing.AppendFrame(framing.Frame{
+		Version:    framing.VersionV1,
+		Capability: 0,
+		Payload:    payload,
+	})
+
+	ctx2, cancel2 := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel2()
+	if d, ok := ctx2.Deadline(); ok {
+		_ = c1.UnderlyingTLSConn().SetWriteDeadline(d)
+	}
+	if _, err := c1.UnderlyingTLSConn().Write(wire); err != nil {
+		t.Fatal(err)
+	}
+
+	f, err := c1.ReadFrame(ctx2)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(f.Payload) == 0 || f.Payload[0] != protocol.MsgTypeProtocolError {
+		t.Fatalf("expected PROTOCOL_ERROR, got %#v", f.Payload[:minLen(4, len(f.Payload))])
+	}
+	code, reason, err := protocol.DecodeProtocolError(f.Payload)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if code != framing.ErrCodeRoutingInvalid {
+		t.Fatalf("got err_code %v, want ErrCodeRoutingInvalid", code)
+	}
+	if reason != "ERR_ROUTING_INVALID" {
+		t.Fatalf("got reason %q, want ERR_ROUTING_INVALID", reason)
+	}
+}
+
+// E2E-02: illegal unicast dst → PROTOCOL_ERROR (ErrCodeRoutingInvalid)
 func TestRelay_StreamData_UnicastMissingDst(t *testing.T) {
 	srvCfg, pool := fakepeer.LocalhostTLSConfig(t)
 	srv := &relay.Server{
