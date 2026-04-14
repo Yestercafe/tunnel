@@ -22,7 +22,7 @@
 ## Current State
 
 - **已交付里程碑：** **v1.0**（2026-04-04）— **v1 协议规范与一致性测试**（`docs/spec/v1/`、`pkg/framing`、`pkg/appenvelope`、`testdata/`、CI）。  
-- **进行中：** **v1.1** — Phase 7–10 已完成；**E2E（Phase 11）** 已通过 `pkg/relay/relay_test.go` 自动化覆盖。  
+- **进行中：** **v1.1** — Phase 7–11 路线图项已完成；E2E 证据见 `pkg/relay/relay_test.go` 与 `REQUIREMENTS.md`。  
 - **代码规模**随本里程碑实现增长（v1.0 参考约 **477** 行 Go，仅供参考）。
 
 ## Requirements
@@ -41,12 +41,12 @@
 - ✓ **最小 Client（CLNT-01..03）**：`pkg/client` + `internal/fakepeer` 集成测试 + `docs/client-stream-ids.md`；`cmd/tunnel client` 冒烟 — Phase 8
 - ✓ **Relay 监听与 Session Registry（RLY-01 / RLY-02）**：`pkg/relay`（TLS、成帧循环、Registry、CREATE/JOIN）；`cmd/tunnel relay` — Phase 9
 - ✓ **Relay 数据面（RLY-03）**：JOIN 后 `STREAM_DATA` 广播（不回送发送者）与单播 — `pkg/relay` — Phase 10
+- ✓ **E2E（E2E-01 / E2E-02）**：双 Client 同 session 广播/单播；非法路由与 JOIN 前 `STREAM_DATA` 负例 — `pkg/relay/relay_test.go`；`REQUIREMENTS.md` Traceability — Phase 11
 
 ### Active（v1.1 实现）
 
 - [x] **RELAY-IMPL（控制面 + 数据面）：** 最小 Relay：TCP+TLS、CREATE/JOIN、**STREAM_DATA** 广播/单播路由 — Phase 9–10
 - [x] **CLIENT-IMPL：** 最小 Client：连接 Relay，完成开房或凭 `session_id`/邀请码加入，能收发**广播**与**单播**数据帧（Phase 8）
-- [x] **E2E-DEMO：** 可重复验证（`go test`）：两 peer 同 session 内广播与单播路径可见 — Phase 11：`pkg/relay/relay_test.go`
 
 ### Out of Scope
 
@@ -104,4 +104,4 @@
 
 ---
 
-*Last updated: 2026-04-14 — Phase 11 E2E（`pkg/relay/relay_test.go`）*
+*Last updated: 2026-04-14 — Phase 11 完成；PROJECT Validated 已纳入 E2E-01/E2E-02*

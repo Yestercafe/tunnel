@@ -140,7 +140,7 @@ Plans:
 | 8. Client | 0/3 | Complete    | 2026-04-04 |
 | 9. Relay 监听与 Registry | 2/2 | Complete   | 2026-04-04 |
 | 10. Relay 数据面路由 | 0/TBD | Complete    | 2026-04-04 |
-| 11. E2E 验证与负例 | 2/2 | Complete | 2026-04-14 |
+| 11. E2E 验证与负例 | 2/2 | Complete    | 2026-04-14 |
 
 ---
 
